@@ -36,3 +36,26 @@ a {
 a:hover {
     text-decoration: underline;
 }
+#research {
+    background: #f9f9f9;
+    padding: 2rem;
+    margin: 1rem auto;
+    max-width: 800px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+#research h2, #research h3 {
+    color: #333;
+    margin-bottom: 1rem;
+}
+#research p, #research ul {
+    line-height: 1.6;
+}
+#research a {
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: bold;
+}
+#research a:hover {
+    text-decoration: underline;
+}
