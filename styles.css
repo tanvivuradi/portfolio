@@ -10,8 +10,7 @@ body {
 header {
     background-color: #FFFFFF;
     border-bottom: 1px solid #D3D3D3;
-    
-    padding: 40px 5%; /* Increase top and bottom padding from 20px to 40px */
+    padding: 40px 5%; /* Increased top and bottom padding for taller nav bar */
 }
 
 header div {
@@ -50,7 +49,7 @@ nav ul li a {
 
 /* Top 1/3: Intro Section */
 #home .intro {
-    height: 33%;
+    height: 33%; /* Top section takes 1/3 of viewport height */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -61,10 +60,10 @@ nav ul li a {
 #home .intro img {
     border-radius: 50%;
     width: 150px;
-    height: 150px;
+    height: auto; /* Maintain aspect ratio */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
-     margin-top: 40px; /* Add 40px of space above the photo */
+    margin-top: 40px; /* Space above the image */
 }
 
 #home .intro h1 {
@@ -72,4 +71,64 @@ nav ul li a {
     color: #000;
 }
 
-#
+/* Collapsible Details Section */
+details {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #D3D3D3; /* Grey border for definition */
+    border-radius: 5px;
+    background: #F9F9F9; /* Light grey background */
+}
+
+details summary {
+    font-size: 1rem;
+    color: #B19CD9; /* Lavender color */
+    cursor: pointer;
+}
+
+details summary:hover {
+    text-decoration: underline;
+}
+
+details div {
+    margin-top: 10px;
+    line-height: 1.6;
+}
+
+details ul {
+    padding-left: 20px; /* Indent list for better readability */
+}
+
+/* Project Section Styling (Optional) */
+.projects {
+    flex: 2; /* Bottom section takes 2/3 of viewport height */
+    padding: 40px;
+    background-color: #F8F9FA; /* Subtle grey background */
+    text-align: center;
+}
+
+.projects h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #000;
+}
+
+.projects ul {
+    list-style: none;
+    padding: 0;
+}
+
+.projects ul li {
+    margin-bottom: 15px;
+}
+
+.projects ul li a {
+    text-decoration: none;
+    font-weight: 400;
+    color: #B19CD9; /* Lavender */
+    font-size: 1.2rem;
+}
+
+.projects ul li a:hover {
+    text-decoration: underline;
+}
