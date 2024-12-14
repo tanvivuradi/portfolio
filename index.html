@@ -7,6 +7,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
+        /* General Reset */
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
@@ -16,16 +17,17 @@
 
         /* Header Styling */
         header {
-            background-color: #FFFFFF;
-            border-bottom: 1px solid #D3D3D3;
-            padding: 20px;
-        }
-        header div {
+            background-color: #FFFFFF; /* White */
+            border-bottom: 1px solid #D3D3D3; /* Grey for subtle divider */
+            padding: 20px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1200px;
-            margin: auto;
+        }
+        .nav-brand {
+            color: #000000; /* Black */
+            font-size: 18px;
+            text-decoration: none;
         }
         nav ul {
             list-style: none;
@@ -38,11 +40,12 @@
         }
         nav ul li a {
             text-decoration: none;
-            color: #000;
-            font-weight: 600;
+            color: #000000; /* Black */
+            font-size: 16px;
+            transition: color 0.3s ease;
         }
         nav ul li a:hover {
-            color: #007BFF;
+            color: #B19CD9; /* Lavender */
         }
 
         /* Home Section Styling */
@@ -51,6 +54,8 @@
             flex-direction: column;
             height: 100vh;
         }
+
+        /* Top 1/3: Intro Section */
         .intro {
             flex: 1;
             display: flex;
@@ -61,41 +66,46 @@
         }
         .intro img {
             width: 150px;
-            height: 150px;
+            height: auto; /* Maintain aspect ratio */
             border-radius: 50%;
             margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         .intro h1 {
             font-size: 2.5rem;
+            color: #000000; /* Black */
+            font-weight: 400; /* No bold text */
             margin: 10px 0;
         }
         .intro p {
             font-size: 1.2rem;
-            color: #555;
+            color: #555555; /* Subtle grey for secondary text */
         }
 
-        /* Projects Section Styling */
+        /* Bottom 2/3: Projects Section */
         .projects {
-            flex: 1;
-            padding: 40px;
-            background-color: #F8F9FA;
+            flex: 2;
+            padding: 40px 5%;
+            background-color: #F8F9FA; /* Subtle grey background */
             text-align: center;
         }
         .projects h2 {
             font-size: 2rem;
             margin-bottom: 20px;
+            color: #000000; /* Black */
         }
         .projects ul {
             list-style: none;
             padding: 0;
         }
         .projects ul li {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
         .projects ul li a {
             text-decoration: none;
-            font-weight: 600;
-            color: #007BFF;
+            font-weight: 400; /* Regular weight */
+            color: #B19CD9; /* Lavender */
+            font-size: 1.2rem;
         }
         .projects ul li a:hover {
             text-decoration: underline;
@@ -103,26 +113,28 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
+    <!-- Navigation Bar -->
     <header>
-        <div>
-            <h1>Tanvi Vuradi</h1>
-            <nav>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                </ul>
-            </nav>
-        </div>
+        <a href="#home" class="nav-brand">Tanvi Vuradi</a>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact Info</a></li>
+            </ul>
+        </nav>
     </header>
 
     <!-- Home Section -->
     <div id="home">
+        <!-- Top 1/3: Intro Section -->
         <div class="intro">
             <img src="profile.jpg" alt="Your Photo">
             <h1>Tanvi Vuradi</h1>
             <p>Welcome to my portfolio! I am a creative professional passionate about design and technology.</p>
         </div>
+
+        <!-- Bottom 2/3: Projects Section -->
         <div id="projects" class="projects">
             <h2>My Projects</h2>
             <ul>
@@ -134,3 +146,4 @@
     </div>
 </body>
 </html>
+
