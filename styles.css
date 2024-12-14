@@ -10,7 +10,8 @@ body {
 header {
     background-color: #FFFFFF;
     border-bottom: 1px solid #D3D3D3;
-    padding: 20px;
+    
+    padding: 40px 5%; /* Increase top and bottom padding from 20px to 40px */
 }
 
 header div {
@@ -63,6 +64,7 @@ nav ul li a {
     height: 150px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
+     margin-top: 40px; /* Add 40px of space above the photo */
 }
 
 #home .intro h1 {
