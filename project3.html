@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 3 - User Research</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #FFFFFF;
+            border-bottom: 1px solid #D3D3D3;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            color: #000000;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #000000;
+            font-weight: 500;
+        }
+
+        nav ul li a:hover {
+            color: #B19CD9; /* Lavender */
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        h1, h2, h3, h4 {
+            color: #000000;
+            margin-bottom: 20px;
+        }
+
+        p, ul {
+            text-align: left; /* Align all text to the left */
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        details {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #D3D3D3;
+            border-radius: 5px;
+            background: #F9F9F9;
+        }
+
+        details summary {
+            font-size: 1rem;
+            color: #B19CD9; /* Lavender */
+            cursor: pointer;
+        }
+
+        details summary:hover {
+            text-decoration: underline;
+        }
+
+        details div {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="nav-brand">Tanvi Vuradi</a>
+        <nav>
+            <ul>
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#contact">Contact Info</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Project 3: User Research</h1>
+        <p>Conducted research to identify and solve pain points in user experiences for students and instructors.</p>
+        <details>
+            <summary><strong>Summary of Studies</strong></summary>
+            <div>
+                <h3>Study 1: Co-Design of Facial Expressions</h3>
+                <p><strong>Objective:</strong> Explore the types of facial expressions children prefer on a social robot (Haru) to redirect their attention when distracted.</p>
+                <p><strong>Participants:</strong> 26 children (5–12 years old).</p>
+                <p><strong>Methodology:</strong> Children were asked to imagine a distracted classroom scenario and draw the facial expressions they would like the robot to display. Speech bubbles were added for what the robot might say.</p>
+                <p><strong>Findings:</strong></p>
+                <ul>
+                    <li>Children preferred cute, friendly, and non-punitive expressions over angry or fear-inducing ones.</li>
+                    <li>Suggestions included fun interactions, dynamic eye/mouth shapes, and external reinforcements like timers or rewards.</li>
+                    <li>Few children used negative expressions like anger.</li>
+                </ul>
+                <h3>Study 2: Evaluation of Pre-Designed Expressions</h3>
+                <p><strong>Objective:</strong> Validate findings from Study 1 by using professionally designed robot expressions to mitigate bias from children’s drawing skills.</p>
+                <p><strong>Participants:</strong> 8 children (5–11 years old).</p>
+                <p><strong>Methodology:</strong> Children rated 23 facial expressions on a five-point scale for how encouraging they found them in motivating focus and task completion.</p>
+                <p><strong>Findings:</strong></p>
+                <ul>
+                    <li>Positive and pleasant expressions scored higher than negative or fear-inducing ones (e.g., anger).</li>
+                    <li>Fear-inducing expressions were consistently rated the lowest.</li>
+                    <li>The results aligned with Study 1, reinforcing the preference for non-punitive feedback.</li>
+                </ul>
+                <h3>Study 3: Testing Animated Simulations</h3>
+                <p><strong>Objective:</strong> Test the impact of animated robot expressions on children’s preferences and their interest in the robot as a study companion.</p>
+                <p><strong>Participants:</strong> 20 children (5–8 years old).</p>
+                <p><strong>Methodology:</strong> Participants watched 16 video clips of animated robot expressions and rated them using the same scale as Study 2. They also discussed whether they would want the robot as a learning companion.</p>
+                <p><strong>Findings:</strong></p>
+                <ul>
+                    <li>Positive expressions remained the most favored, while fear-inducing ones (e.g., anger, annoyance) were rated the lowest.</li>
+                    <li>Movement in some animations (e.g., a countdown timer) introduced urgency, which reduced their appeal.</li>
+                    <li>60% of participants said they would like Haru as a study companion, with some suggestions for improvement (e.g., making it a mobile robot).</li>
+                </ul>
+                <h3>Key Takeaways Across Studies</h3>
+                <ul>
+                    <li>Children preferred fun, friendly, and encouraging expressions for feedback.</li>
+                    <li>Negative or fear-inducing expressions discouraged interaction and were not suitable for child-robot communication.</li>
+                    <li>Co-designing with children revealed valuable insights into their preferences, emphasizing the importance of creating a nurturing and engaging robot personality.</li>
+                </ul>
+            </div>
+        </details>
+    </div>
+</body>
+</html>
