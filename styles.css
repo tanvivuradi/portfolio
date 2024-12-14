@@ -1,61 +1,86 @@
-body {
-    font-family: Arial, sans-serif;
+/* General Reset */
+* {
     margin: 0;
     padding: 0;
-    line-height: 1.6;
-    background: #f4f4f4;
-    color: #333;
+    box-sizing: border-box;
+    font-family: 'Helvetica', 'Arial', sans-serif;
 }
+
+/* Body Styling */
+body {
+    background-color: #FFFFFF; /* White */
+    color: #000000; /* Black */
+    line-height: 1.6;
+}
+
+/* Header Styling */
 header {
-    background: #333;
-    color: #fff;
-    padding: 1rem 0;
-    text-align: center;
+    background: #FFFFFF; /* White */
+    border-bottom: 1px solid #D3D3D3; /* Grey border */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
-section {
-    padding: 2rem;
-    margin: 1rem auto;
-    max-width: 800px;
-    background: #fff;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
 }
-h1, h2 {
-    color: #333;
-}
-footer {
-    text-align: center;
-    padding: 1rem 0;
-    background: #333;
-    color: #fff;
-}
-a {
-    color: #007BFF;
-    text-decoration: none;
-}
-a:hover {
-    text-decoration: underline;
-}
-#research {
-    background: #f9f9f9;
-    padding: 2rem;
-    margin: 1rem auto;
-    max-width: 800px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-#research h2, #research h3 {
-    color: #333;
-    margin-bottom: 1rem;
-}
-#research p, #research ul {
-    line-height: 1.6;
-}
-#research a {
-    color: #007BFF;
-    text-decoration: none;
+
+header .logo {
+    font-size: 24px;
     font-weight: bold;
+    color: #000000; /* Black */
 }
-#research a:hover {
-    text-decoration: underline;
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin-left: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #000000; /* Black */
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #B19CD9; /* Lavender */
+}
+
+/* Hero Section Styling */
+.hero {
+    background: linear-gradient(to right, #FFFFFF, #F7F7F7); /* Subtle Grey Gradient */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+}
+
+.hero-content .highlight {
+    color: #B19CD9; /* Lavender */
+}
+
+.profile-img {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    margin-top: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
