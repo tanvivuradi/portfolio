@@ -132,3 +132,9 @@ details ul {
 .projects ul li a:hover {
     text-decoration: underline;
 }
+
+/* Disable smooth scroll for the home link */
+a[href="#home"] {
+  scroll-behavior: auto;
+}
+
