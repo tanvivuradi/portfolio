@@ -18,16 +18,17 @@
         /* Header Styling */
         header {
             background-color: #FFFFFF; /* White */
-            border-bottom: 1px solid #D3D3D3; /* Grey for subtle divider */
-            padding: 40px 5%;
+            border-bottom: 1px solid #D3D3D3; /* Subtle grey divider */
+            padding: 20px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         .nav-brand {
-            color: #000000; /* Black */
+            color: #000000;
             font-size: 18px;
             text-decoration: none;
+            font-weight: 600;
         }
         nav ul {
             list-style: none;
@@ -40,63 +41,53 @@
         }
         nav ul li a {
             text-decoration: none;
-            color: #000000; /* Black */
+            color: #000000;
             font-size: 16px;
             transition: color 0.3s ease;
         }
         nav ul li a:hover {
-            color: #9B5DE5; /* Lavender */
+            color: #9B5DE5;
         }
 
-        /* Home Section Styling */
-        #home {
+        /* Hero Banner Styling */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 60vh;
+            background: url('headshot-1.jpg') no-repeat center center/cover;
             display: flex;
-            flex-direction: column;
-            height: 100vh;
-        }
-
-        /* Top 1/3: Intro Section */
-        .intro {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            text-align: center;
-             background-color: #F8F9FA; /* Subtle grey background */
+            justify-content: flex-end;
+            padding: 0 10%;
+            color: #FFFFFF;
         }
-        .intro img {
-            width: 250px;
-            height: auto; /* Maintain aspect ratio */
-            border-radius: 50%;
-            margin-bottom: 10px;
-            margin-top: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.3); /* Gradient overlay for readability */
         }
-        .intro h1 {
+        .hero-content {
+            position: relative;
+            max-width: 500px;
+            text-align: right;
+        }
+        .hero-content h1 {
             font-size: 2.5rem;
-            color: #000000; /* Black */
-            font-weight: 400; /* No bold text */
-            margin: 10px 0;
+            margin: 0;
         }
-        .intro p {
+        .hero-content p {
             font-size: 1.2rem;
-            color: #555555; /* Subtle grey for secondary text */
         }
 
-        /* Bottom 2/3: Projects Section */
+        /* Projects Section */
         .projects {
-            flex: 2;
-            padding: 40px 5%;
-           
+            padding: 60px 5%;
             text-align: center;
-            
         }
-        
         .projects h2 {
             font-size: 2rem;
-            margin-bottom: 20px;
-            color: #000000; /* Black */
+            color: #000000;
         }
         .projects ul {
             list-style: none;
@@ -107,60 +98,37 @@
         }
         .projects ul li a {
             text-decoration: none;
-            font-weight: 400; /* Regular weight */
-            color: #9B5DE5; /* Lavender */
+            font-weight: 400;
+            color: #9B5DE5;
             font-size: 1.2rem;
         }
         .projects ul li a:hover {
             text-decoration: underline;
         }
-         a[href="#home"] {
-            scroll-behavior: auto;
-        }
-        .full-width-black {
-    background-color: #000; /* Black background */
-    width: 100vw; /* Full viewport width */
-    padding: 40px 0; /* Padding for spacing */
-    display: flex;
-    justify-content: center; /* Centers content */
-}
-
-.full-width-black .container {
-    max-width: 800px; /* Matches your existing layout */
-    width: 100%;
-    text-align: center; /* Center image */
-}
-
-.full-width-black img {
-    width: 100%; /* Make it responsive */
-    height: auto; /* Maintain aspect ratio */
-    max-width: 100%; /* Prevent overflow */
-}
-
     </style>
 </head>
 <body>
     <!-- Navigation Bar -->
     <header>
-        <a href="javascript:void(0);" class="nav-brand">Tanvi Vuradi</a>
+        <a href="#home" class="nav-brand">Tanvi Vuradi</a>
         <nav>
             <ul>
-                <li><a  href="javascript:void(0);">Home</a></li>
+                <li><a href="#home">Home</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#contact">Contact Info</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Home Section -->
-    <div id="home">
-    <!-- Top 1/3: Intro Section -->
-    <div class="intro">
-        <img src="profile.jpg" alt="Your Photo">
-        <p>Hi, I am Tanvi! I am a creative professional passionate about design and technology.</p>
-    </div>
+    <!-- Hero Banner -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Hi, I'm Tanvi.</h1>
+            <p>A creative professional passionate about design and technology.</p>
+        </div>
+    </section>
 
-    <!-- Bottom 2/3: Projects Section -->
+    <!-- Projects Section -->
     <div id="projects" class="projects">
         <h2>My Projects</h2>
         <ul>
@@ -169,7 +137,6 @@
             <li><a href="project3.html">Project 3 - Exploring Social Robot UX for Child Attention Redirection</a></li>
         </ul>
     </div>
-    </div>
 </body>
 </html>
- 
+
