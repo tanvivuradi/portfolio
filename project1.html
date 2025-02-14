@@ -77,33 +77,7 @@
     height: 800px;
     border: none; /* Optional: clean up any borders */
 }
-     .side-by-side-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    max-width: 800px; /* Ensures container doesn't exceed 800px */
-    margin: 0 auto; /* Centers it */
-}
-
-.left-half,
-.right-half {
-    flex: 1;
-    max-width: 50%; /* Ensures both take up equal space */
-}
-
-.before-image {
-    width: 100%; /* Ensures it scales within its container */
-    height: auto;
-    border: 2px solid #fff;
-    border-radius: 8px;
-}
-
-.right-half iframe {
-    width: 100%; /* Ensures it fits within the right half */
-    max-width: 100%; /* Ensures it doesn't overflow */
-    height: 400px; /* Adjust height as needed */
-}
+     
 </style>
 </head>
 <body>
@@ -172,21 +146,19 @@
         </div>
     
      <div class="full-width-black">
-         <!-- Container for Side-by-Side Layout -->
-<div class="side-by-side-container">
-    <!-- Left: Before Image -->
-    <div class="left-half">
+      
+  
         <img src="ppt_ss.png" alt="Before Activity Screenshot" class="before-image">
     </div>
 
-    <!-- Right: Second Activity -->
-    <div class="right-half">
+  
+   <div class="full-width-black">
         <iframe src="https://h5p.org/h5p/embed/1519546" width="800" height="800" frameborder="0" allowfullscreen="allowfullscreen" allow="geolocation *; microphone *; camera *; midi *; encrypted-media *" title="Creatinine Case" class="contained-image"></iframe>
         <script src="https://h5p.org/sites/all/modules/h5p/library/js/h5p-resizer.js" charset="UTF-8"></script>
     </div>
-</div>
+
        
-        </div>
+      
  <div class="container">
 
 
