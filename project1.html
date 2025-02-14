@@ -77,6 +77,29 @@
     height: 800px;
     border: none; /* Optional: clean up any borders */
 }
+        .side-by-side-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px; /* Adds spacing between items */
+}
+
+.left-half {
+    flex: 1;
+    text-align: center;
+}
+
+.before-image {
+    width: 100%; /* Adjust size as needed */
+    max-width: 400px; /* Prevents it from being too large */
+    height: auto;
+    border: 2px solid #fff; /* Optional: Add a border */
+    border-radius: 8px; /* Optional: Rounded corners */
+}
+
+.right-half {
+    flex: 1;
+}
 </style>
 </head>
 <body>
@@ -149,7 +172,7 @@
 <div class="side-by-side-container">
     <!-- Left: Before Image -->
     <div class="left-half">
-        <img src="ppt_ss.jpg" alt="Before Activity Screenshot" class="before-image">
+        <img src="ppt_ss.png" alt="Before Activity Screenshot" class="before-image">
     </div>
 
     <!-- Right: Second Activity -->
