@@ -77,28 +77,32 @@
     height: 800px;
     border: none; /* Optional: clean up any borders */
 }
-        .side-by-side-container {
+     .side-by-side-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 20px; /* Adds spacing between items */
+    gap: 20px;
+    max-width: 800px; /* Ensures container doesn't exceed 800px */
+    margin: 0 auto; /* Centers it */
 }
 
-.left-half {
+.left-half,
+.right-half {
     flex: 1;
-    text-align: center;
+    max-width: 50%; /* Ensures both take up equal space */
 }
 
 .before-image {
-    width: 100%; /* Adjust size as needed */
-    max-width: 400px; /* Prevents it from being too large */
+    width: 100%; /* Ensures it scales within its container */
     height: auto;
-    border: 2px solid #fff; /* Optional: Add a border */
-    border-radius: 8px; /* Optional: Rounded corners */
+    border: 2px solid #fff;
+    border-radius: 8px;
 }
 
-.right-half {
-    flex: 1;
+.right-half iframe {
+    width: 100%; /* Ensures it fits within the right half */
+    max-width: 100%; /* Ensures it doesn't overflow */
+    height: 400px; /* Adjust height as needed */
 }
 </style>
 </head>
