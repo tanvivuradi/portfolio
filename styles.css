@@ -101,60 +101,35 @@ details ul {
 
 /* Project Section Styling (Optional) */
 .projects {
-    flex: 2; /* Bottom section takes 2/3 of viewport height */
-    padding: 40px;
-    background-color: #F8F9FA; /* Subtle grey background */
-    text-align: center;
+    padding: 40px 5%;
+    background-color: #F8F9FA;
+    text-align: left;
 }
 
 .projects h2 {
     font-size: 2rem;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     color: #000;
 }
-
-.projects ul {
-    list-style: none;
-    padding: 0;
-}
-
-.projects ul li {
-    margin-bottom: 15px;
-}
-
-.projects ul li a {
-    text-decoration: none;
-    font-weight: 400;
-    color: #B19CD9; /* Lavender */
-    font-size: 1.2rem;
-}
-
-.projects ul li a:hover {
-    text-decoration: underline;
-}
-
 
 .project-list {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 30px;
-    max-width: 900px;
+    gap: 40px;
+    max-width: 1000px;
     margin: 0 auto;
-    text-align: left;
 }
 
 .project-item {
     display: flex;
-    align-items: flex-start;
+    flex-direction: row;
     gap: 20px;
-    border-bottom: 1px solid #e0e0e0;
-    padding-bottom: 20px;
+    align-items: flex-start;
 }
 
 .project-thumbnail {
-    width: 140px;
-    height: 100px;
+    width: 200px;
+    height: 130px;
     background-color: #ccc;
     background-size: cover;
     background-position: center;
@@ -162,18 +137,26 @@ details ul {
     flex-shrink: 0;
 }
 
-.project-content {
-    flex: 1;
+.project-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 10px;
 }
 
-.project-content h3 {
-    margin: 0 0 10px;
+.project-info h3 {
+    margin: 0;
     font-size: 1.3rem;
     color: #B19CD9;
 }
 
-.project-content p {
+.project-info h3 a {
+    text-decoration: none;
+    color: #B19CD9;
+}
+
+.project-info p {
     margin: 0;
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: #333;
 }
