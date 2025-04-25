@@ -100,6 +100,7 @@ details ul {
 }
 
 /* Project Section Styling (Optional) */
+
 .projects {
     padding: 40px 5%;
     background-color: #F8F9FA;
@@ -109,7 +110,7 @@ details ul {
 .projects h2 {
     font-size: 2rem;
     margin-bottom: 30px;
-    color: #000;
+    color: #000; /* Retained original black color */
 }
 
 .project-list {
@@ -142,21 +143,22 @@ details ul {
     flex-direction: column;
     justify-content: flex-start;
     gap: 10px;
+    max-width: 700px;
 }
 
 .project-info h3 {
     margin: 0;
     font-size: 1.3rem;
-    color: #B19CD9;
+    color: #B19CD9; /* Retained original lavender color */
 }
 
 .project-info h3 a {
     text-decoration: none;
-    color: #B19CD9;
+    color: #B19CD9; /* Retained original lavender color */
 }
 
 .project-info p {
     margin: 0;
     font-size: 1rem;
-    color: #333;
+    color: #000; /* Retained original black color */
 }
