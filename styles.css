@@ -126,6 +126,11 @@ details ul {
     flex-direction: row;
     gap: 20px;
     align-items: flex-start;
+    margin-bottom: 40px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fafafa;
 }
 
 .project-thumbnail {
