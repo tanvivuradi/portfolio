@@ -92,12 +92,18 @@ nav ul li a:hover {
 
 .project-item {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 800px;
+    align-items: flex-start; /* Align items at the start (top) */
+    justify-content: flex-start; /* Align items to the left */
+    gap: 20px; /* Add space between thumbnail and project info */
+    margin-bottom: 30px; /* Adjust bottom margin as needed */
+    max-width: 800px; /* Ensures the item doesn’t grow too wide */
     width: 100%;
 }
 
+.project-info {
+    flex: 1; /* Makes the summary section flexible and take up remaining space */
+    text-align: left; /* Align the text left */
+}
 .project-info h3 {
     margin-bottom: 5px;
 }
@@ -114,10 +120,9 @@ nav ul li a:hover {
 }
 
 .project-thumbnail {
-    width: 100%;
-    height: 200px;
+    width: 200px; /* Set the width of the thumbnail */
+    height: 200px; /* Set the height of the thumbnail */
     background-size: cover;
     background-position: center;
     border-radius: 8px;
-    margin-top: 10px;
 }
