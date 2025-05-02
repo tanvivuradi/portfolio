@@ -120,7 +120,7 @@ nav ul li a:hover {
 }
 
 .project-thumbnail{
-    width: 300px;
+    width: 280px;
     height: 180px;
     background-size: contain; /* Ensures full image is visible */
     background-position: center;
