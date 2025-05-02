@@ -99,8 +99,7 @@ details ul {
     padding-left: 20px; /* Indent list for better readability */
 }
 
-/* Project Section Styling (Optional) */
-
+/* Project Section Styling */
 .projects {
     padding: 40px 5%;
     background-color: #F8F9FA;
@@ -123,9 +122,9 @@ details ul {
 
 .project-item {
     display: flex;
-    flex-direction: row;
+    flex-direction: column; /* Stack the content vertically */
     gap: 20px;
-    align-items: flex-start;
+    align-items: flex-start; /* Align to the left */
     margin-bottom: 40px;
     padding: 20px;
     border: 1px solid #ddd;
@@ -133,14 +132,21 @@ details ul {
     background-color: #fafafa;
 }
 
+.project-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #000;
+}
+
 .project-thumbnail {
-    width: 200px;
-    height: 130px;
+    width: 150px; /* Adjusted for better proportion */
+    height: 100px; /* Adjusted for better proportion */
     background-color: #ccc;
     background-size: cover;
     background-position: center;
     border-radius: 10px;
     flex-shrink: 0;
+    margin-bottom: 10px; /* Space between the image and text */
 }
 
 .project-info {
