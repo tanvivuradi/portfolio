@@ -122,9 +122,9 @@ details ul {
 
 .project-item {
     display: flex;
-    flex-direction: column; /* Stack the content vertically */
-    gap: 20px;
-    align-items: flex-start; /* Align to the left */
+    flex-direction: row; /* Aligning elements in a row */
+    gap: 20px; /* Space between title, thumbnail, and description */
+    align-items: flex-start; /* Align all items at the top */
     margin-bottom: 40px;
     padding: 20px;
     border: 1px solid #ddd;
@@ -132,29 +132,12 @@ details ul {
     background-color: #fafafa;
 }
 
-.project-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #000;
-}
-
-.project-thumbnail {
-    width: 150px; /* Adjusted for better proportion */
-    height: 100px; /* Adjusted for better proportion */
-    background-color: #ccc;
-    background-size: cover;
-    background-position: center;
-    border-radius: 10px;
-    flex-shrink: 0;
-    margin-bottom: 10px; /* Space between the image and text */
-}
-
 .project-info {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     gap: 10px;
-    max-width: 700px;
+    max-width: 700px; /* Keeps project info within a reasonable width */
 }
 
 .project-info h3 {
@@ -172,4 +155,14 @@ details ul {
     margin: 0;
     font-size: 1rem;
     color: #000; /* Retained original black color */
+}
+
+.project-thumbnail {
+    width: 200px;
+    height: 130px;
+    background-color: #ccc;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    flex-shrink: 0;
 }
