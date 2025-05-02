@@ -3,179 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tanvi Vuradi | Portfolio</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-
-    <style>
-        /* General Reset */
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            scroll-behavior: smooth;
-        }
-
-        /* Header Styling */
-        header {
-            background-color: #FFFFFF; /* White */
-            border-bottom: 1px solid #D3D3D3; /* Grey for subtle divider */
-            padding: 30px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .nav-brand {
-            color: #000000; /* Black */
-            font-size: 18px;
-            text-decoration: none;
-        }
-        nav ul {
-            list-style: none;
-            display: flex;
-            margin: 0;
-            padding: 0;
-        }
-        nav ul li {
-            margin-left: 20px;
-        }
-        nav ul li a {
-            text-decoration: none;
-            color: #000000; /* Black */
-            font-size: 16px;
-            transition: color 0.3s ease;
-        }
-        nav ul li a:hover {
-            color: #9B5DE5; /* Lavender */
-        }
-
-        /* Banner Image Section */
-        #banner {
-            position: relative;
-            width: 100%;
-            height: 55vh; /* 50% of viewport height */
-            background-image: url('headshot-1.JPG');
-            background-size: cover;
-            background-position: 0% 34%;
-            
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-        }
-
-        .about-overlay {
-            position: absolute;
-            right: 5%;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: 600;
-            background: rgba(0, 0, 0, 0.5); /* Dark overlay */
-            padding: 15px;
-            border-radius: 5px;
-            max-width: 50%; /* Ensures text doesn't overflow */
-            text-align: center;
-        }
-
-        /* Bottom 2/3: Projects Section */
-        .projects {
-            padding: 30px 5%;
-            text-align: center;
-        }
-        
-        .projects h2 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            color: #000000; /* Black */
-        }
-        .projects ul {
-            list-style: none;
-            padding: 0;
-        }
-        .projects ul li {
-            margin-bottom: 15px;
-        }
-        .projects ul li a {
-            text-decoration: none;
-            font-weight: 400; /* Regular weight */
-            color: #9B5DE5; /* Lavender */
-            font-size: 1.2rem;
-        }
-        .projects ul li a:hover {
-            text-decoration: underline;
-        }
-
-    </style>
+    <title>Tanvi's Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Navigation Bar -->
     <header>
-        <a href="javascript:void(0);" class="nav-brand">Tanvi Vuradi</a>
-        <nav>
-            <ul>
-                <li><a href="javascript:void(0);">Home</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact Info</a></li>
-            </ul>
-        </nav>
+        <div>
+            <h1>Tanvi</h1>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <!-- Banner Image Section -->
-    <div id="banner">
-        <div class="about-overlay">
-            Hi, I am Tanvi! I am a creative professional passionate about design and technology.
+    <section id="home">
+        <!-- Intro Section (Top 1/3) -->
+        <div class="intro">
+            <img src="headshot-1.jpg" alt="Tanvi">
+            <h1>Welcome to My Portfolio</h1>
+            <details>
+                <summary>More About Me</summary>
+                <div>
+                    <p>Hi, I'm Tanvi. I'm a Learning Designer and passionate about creating impactful learning experiences.</p>
+                </div>
+            </details>
         </div>
-    </div>
+    </section>
 
-    <!-- Projects Section -->
-    
-   <div class="projects" id="projects">
-    <h2>My Projects</h2>
-
-    <div class="project-list">
-
-        <div class="project-item">
-            <div class="project-info">
-                <h3><a href="project1.html">eLearning Design</a></h3>
-                <div class="project-thumbnail" style="background-image: url('ppt_ss.png');"></div>
+    <section id="projects" class="projects">
+        <h2>My Projects</h2>
+        <div class="project-list">
+            <!-- Example Project 1 -->
+            <div class="project-item">
+                <div class="project-thumbnail" style="background-image: url('project-image1.jpg');"></div>
+                <div class="project-info">
+                    <h3><a href="project1.html">Project Title 1</a></h3>
+                    <p>Short description of the project goes here. It highlights the key aspects of the project.</p>
+                </div>
             </div>
-            <div class="project-info">
-                <p>Designed a learner-centered online module with accessibility-first practices using Canvas LMS and UDL principles.</p>
-            </div>
-        </div>
-
-        <div class="project-item">
-            <div class="project-info">
-                <h3><a href="project2.html">Social Robot UX Research</a></h3>
-                <div class="project-thumbnail" style="background-image: url('robot-thumbnail.jpg');"></div>
-            </div>
-            <div class="project-info">
-                <p>Conducted UX research on how social robots can help redirect children's attention during learning activities using surveys and observation.</p>
+            <!-- Example Project 2 -->
+            <div class="project-item">
+                <div class="project-thumbnail" style="background-image: url('project-image2.jpg');"></div>
+                <div class="project-info">
+                    <h3><a href="project2.html">Project Title 2</a></h3>
+                    <p>Short description of the project goes here. It highlights the key aspects of the project.</p>
+                </div>
             </div>
         </div>
-        <div class="project-item">
-    <div class="project-info">
-        <h3>3D Design Preview</h3>
-      <model-viewer 
-  src="untitled.glb" 
-  alt="A 3D model of a rocket" 
-  auto-rotate 
-  camera-controls 
-  ar
+    </section>
 
-  exposure="0.6"
-  environment-image="neutral"
-  shadow-intensity="0.2"
-  style="width: 900px; height: 700px; border-radius: 10px; background-color: #f0f0f0;">
-</model-viewer>
-    </div>
-    <div class="project-info">
-        <p>A 3D model created using [Tool Name]. You can click and drag to rotate it.</p>
-    </div>
-            <a href="content/index.html" target="_blank">View Interactive Course</a>
-</div>
+    <section id="contact">
+        <!-- Contact Section -->
+        <h2>Contact</h2>
+        <p>If you'd like to get in touch, please reach out to me via email at <a href="mailto:tunnuv@gmail.com">tunnuv@gmail.com</a>.</p>
+    </section>
 
-    </div>
-</div>
+    <!-- Optional footer -->
+    <footer>
+        <p>&copy; 2025 Tanvi. All rights reserved.</p>
+    </footer>
 </body>
 </html>
+
