@@ -7,105 +7,9 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-
-    <style>
-        /* General Reset */
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            scroll-behavior: smooth;
-        }
-
-        /* Header Styling */
-        header {
-            background-color: #FFFFFF; /* White */
-            border-bottom: 1px solid #D3D3D3; /* Grey for subtle divider */
-            padding: 30px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .nav-brand {
-            color: #000000; /* Black */
-            font-size: 18px;
-            text-decoration: none;
-        }
-        nav ul {
-            list-style: none;
-            display: flex;
-            margin: 0;
-            padding: 0;
-        }
-        nav ul li {
-            margin-left: 20px;
-        }
-        nav ul li a {
-            text-decoration: none;
-            color: #000000; /* Black */
-            font-size: 16px;
-            transition: color 0.3s ease;
-        }
-        nav ul li a:hover {
-            color: #9B5DE5; /* Lavender */
-        }
-
-        /* Banner Image Section */
-        #banner {
-            position: relative;
-            width: 100%;
-            height: 55vh; /* 50% of viewport height */
-            background-image: url('headshot-1.JPG');
-            background-size: cover;
-            background-position: 0% 34%;
-            
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-        }
-
-        .about-overlay {
-            position: absolute;
-            right: 5%;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: 600;
-            background: rgba(0, 0, 0, 0.5); /* Dark overlay */
-            padding: 15px;
-            border-radius: 5px;
-            max-width: 50%; /* Ensures text doesn't overflow */
-            text-align: center;
-        }
-
-        /* Bottom 2/3: Projects Section */
-        .projects {
-            padding: 30px 5%;
-            text-align: center;
-        }
-        
-        .projects h2 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            color: #000000; /* Black */
-        }
-        .projects ul {
-            list-style: none;
-            padding: 0;
-        }
-        .projects ul li {
-            margin-bottom: 15px;
-        }
-        .projects ul li a {
-            text-decoration: none;
-            font-weight: 400; /* Regular weight */
-            color: #9B5DE5; /* Lavender */
-            font-size: 1.2rem;
-        }
-        .projects ul li a:hover {
-            text-decoration: underline;
-        }
-
-    </style>
+    
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Navigation Bar -->
@@ -145,7 +49,6 @@
             </div>
             <div class="project-thumbnail" style="background-image: url('path_to_thumbnail_2.jpg');"></div>
         </div>
-        <!-- Add more projects in the same structure -->
         <div class="project-item">
             <div class="project-info">
                 <h3><a href="project3.html">3D Modelling using Blender GIS</a></h3>
@@ -153,12 +56,7 @@
             </div>
             <div class="project-thumbnail" style="background-image: url('path_to_thumbnail_2.jpg');"></div>
         </div>
-        <!-- Add more projects in the same structure -->
-    </div>
     </div>
 </section>
-
-
-
 </body>
 </html>
