@@ -124,6 +124,7 @@ nav ul li a:hover {
     height: 180px;
     background-size: contain; /* Ensures full image is visible */
     background-position: center;
+    background-repeat: no-repeat; /* Prevents tiling */
     border-radius: 8px;  
 }
 
