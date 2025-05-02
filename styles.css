@@ -122,11 +122,12 @@ nav ul li a:hover {
 .project-thumbnail{
     width: 300px;
     height: 180px;
+    background-size: contain; /* Ensures full image is visible */
+    background-repeat: no-repeat; /* Prevents tiling */
+    background-position: center;
     border-radius: 8px;
-    overflow: hidden;
-    display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #f0f0f0; /* fallback background */
+  
 }
 
