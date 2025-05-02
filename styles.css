@@ -1,4 +1,4 @@
-/* General Styles */
+/* General Reset & Typography */
 body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
@@ -6,19 +6,20 @@ body {
     scroll-behavior: smooth;
 }
 
-/* Header */
+/* Header Styles */
 header {
     background-color: #FFFFFF;
     border-bottom: 1px solid #D3D3D3;
-    padding: 40px 5%; /* Increased top and bottom padding for taller nav bar */
-}
-
-header div {
+    padding: 30px 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
-    margin: auto;
+}
+
+.nav-brand {
+    color: #000000;
+    font-size: 18px;
+    text-decoration: none;
 }
 
 nav ul {
@@ -34,149 +35,89 @@ nav ul li {
 
 nav ul li a {
     text-decoration: none;
-    color: #000;
+    color: #000000;
+    font-size: 16px;
     font-weight: 500;
+    transition: color 0.3s ease;
 }
 
-/* Home Section */
-#home {
-    height: 100vh;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+nav ul li a:hover {
+    color: #9B5DE5;
 }
 
-/* Top 1/3: Intro Section */
-#home .intro {
-    height: 33%; /* Top section takes 1/3 of viewport height */
+/* Banner Section */
+#banner {
+    position: relative;
+    width: 100%;
+    height: 55vh;
+    background-image: url('headshot-1.JPG');
+    background-size: cover;
+    background-position: 0% 34%;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
-    background: #FFFFFF;
 }
 
-#home .intro img {
-    border-radius: 50%;
-    width: 150px;
-    height: auto; /* Maintain aspect ratio */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    margin-top: 40px; /* Space above the image */
-}
-
-#home .intro h1 {
+.about-overlay {
+    position: absolute;
+    right: 5%;
+    color: white;
     font-size: 1.5rem;
-    color: #000;
-}
-
-/* Collapsible Details Section */
-details {
-    margin-top: 10px;
-    padding: 10px;
-    border: 1px solid #D3D3D3; /* Grey border for definition */
+    font-weight: 600;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 15px;
     border-radius: 5px;
-    background: #F9F9F9; /* Light grey background */
+    max-width: 50%;
+    text-align: center;
 }
 
-details summary {
-    font-size: 1rem;
-    color: #B19CD9; /* Lavender color */
-    cursor: pointer;
-}
-
-details summary:hover {
-    text-decoration: underline;
-}
-
-details div {
-    margin-top: 10px;
-    line-height: 1.6;
-}
-
-details ul {
-    padding-left: 20px; /* Indent list for better readability */
-}
-
-/* Project Section Styling */
+/* Projects Section */
 .projects {
-    padding: 40px 5%;
-    background-color: #F8F9FA;
-    text-align: left;
+    padding: 30px 5%;
+    text-align: center;
 }
 
 .projects h2 {
     font-size: 2rem;
-    margin-bottom: 30px;
-    color: #000; /* Retained original black color */
+    margin-bottom: 20px;
+    color: #000000;
 }
 
 .project-list {
     display: flex;
     flex-direction: column;
-    gap: 40px;
-    max-width: 1000px;
-    margin: 0 auto;
+    gap: 30px;
+    align-items: center;
 }
 
 .project-item {
     display: flex;
-    flex-direction: row; /* Aligning elements in a row */
-    gap: 20px; /* Space between title, thumbnail, and description */
-    align-items: flex-start; /* Align all items at the top */
-    margin-bottom: 40px;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    background-color: #fafafa;
-}
-
-.project-info {
-    display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    gap: 10px;
-    max-width: 700px; /* Keeps project info within a reasonable width */
+    align-items: center;
+    max-width: 800px;
+    width: 100%;
 }
 
 .project-info h3 {
-    margin: 0;
-    font-size: 1.3rem;
-    color: #B19CD9; /* Retained original lavender color */
+    margin-bottom: 5px;
 }
 
-.project-info h3 a {
+.project-info a {
     text-decoration: none;
-    color: #B19CD9; /* Retained original lavender color */
+    font-weight: 400;
+    color: #9B5DE5;
+    font-size: 1.2rem;
 }
 
-.project-info p {
-    margin: 0;
-    font-size: 1rem;
-    color: #000; /* Retained original black color */
+.project-info a:hover {
+    text-decoration: underline;
 }
 
 .project-thumbnail {
-    width: 200px;
-    height: 130px;
-    background-color: #ccc;
+    width: 100%;
+    height: 200px;
     background-size: cover;
     background-position: center;
-    border-radius: 10px;
-    flex-shrink: 0;
-}
-.project-item {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 20px;
-    border: 1px solid #ddd;
     border-radius: 8px;
-    background-color: #fafafa;
+    margin-top: 10px;
 }
-
-.project-info {
-    text-align: left;
-}
-
