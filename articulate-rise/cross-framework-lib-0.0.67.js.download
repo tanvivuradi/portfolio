@@ -1,0 +1,1596 @@
+var pe = Object.defineProperty;
+var fe = (r, e, i) => e in r ? pe(r, e, { enumerable: !0, configurable: !0, writable: !0, value: i }) : r[e] = i;
+var p = (r, e, i) => fe(r, typeof e != "symbol" ? e + "" : e, i);
+import { L as de } from "./chunks/lup-helper-CYbQ3o0R.js";
+import { i as O } from "./chunks/i18n--rJBTS14.js";
+import { C } from "./chunks/lit-BcLAvpHu.js";
+function x(r) {
+  return typeof r == "number" && Number.isFinite(r);
+}
+function B(r, e) {
+  const i = localStorage.getItem("authToken"), t = new Headers(e.headers);
+  return i && t.set("Authorization", "Bearer-Embed " + i), fetch(r, {
+    ...e,
+    headers: t
+  });
+}
+class me {
+  constructor(e = new de()) {
+    this.helper = e;
+  }
+  /**
+   * Determines if the learner can access the current module if the course is sequenced.
+   * it does so by looking at the component to load but also the previous component in the list
+   * as we want to see the status of the previous component should this one be completed or not.
+   *
+   * @param  enrollment -  Enrollment related whose components we are checking
+   * @param  enrollment_component - Current enrollment component
+   * @param  enrollment_components - Array of the enrollment components
+   * @returns learner can access the current module or not
+   */
+  sequenceBlocked(e, i, t) {
+    const n = this.helper;
+    if (e.enable_sequencing != 1 || [n.enrollmentStatuses.completed, n.enrollmentStatuses.passed].includes(e.status_id))
+      return !1;
+    const s = i.component_type_id;
+    return s === n.componentTypes.session || s === n.componentTypes.training || i.is_survey == 1 && i.survey_is_mandatory == 1 && e.status_id == n.enrollmentStatuses.failed ? !1 : this.dontHaveUncompletedModule(t, i, e);
+  }
+  /**
+   * Check have some enrollment component before current one ned to be completed before you can access current one
+   * @param enrollmentComponents - Array of the enrollment components
+   * @param enrollmentComponent -  Current enrollment component
+   * @param enrollment - Enrollment related whose components we are checking
+   * @returns true if no enrollment components need to be completed before current one
+   */
+  dontHaveUncompletedModule(e, i, t) {
+    const n = this.helper;
+    let s = !0;
+    const o = e.findIndex((a) => a.id === i.id);
+    return e.forEach((a) => {
+      const c = e.findIndex((d) => d.id === a.id);
+      x(o) && x(c) && c < o && (!a.override_sequencing && !(a.enrollment_component_status_id == n.enrollmentStatuses.completed || a.enrollment_component_status_id == n.enrollmentStatuses.passed) && !((a.enrollment_component_status_id == n.enrollmentStatuses.pending_review || a.enrollment_component_status_id == n.enrollmentStatuses.in_progress && a.was_rejected) && t.bypass_sequencing_on_assignments == 1) && !(a.enrollment_component_status_id == n.enrollmentStatuses.pending_review && t.bypass_sequencing_on_checklists == 1 && a.component_type_id === n.componentTypes.checklist) && !(a.enrollment_component_status_id >= n.enrollmentStatuses.completed && (x(t.pass_mark) || a.enrollment_exam_status_id && (a.is_knowledge_test == 1 || a.is_survey == 1))) && !(a.enrollment_component_status_id == n.enrollmentStatuses.in_progress && a.was_rejected) && !(a.component_type_id === n.componentTypes.e_signature && t.bypass_sequencing_on_esignatures === 1) && (s = !1), !a.override_sequencing && a.component_type_id === n.componentTypes.checklist && a.enrollment_component_status_id === n.enrollmentStatuses.pending_review && t.bypass_sequencing_on_checklists === 0 && (s = !1));
+    }), s;
+  }
+  moduleReleased(e, i) {
+    const t = new Date(e.release_at).getTime();
+    return !(i && t > Date.now());
+  }
+}
+var h = /* @__PURE__ */ ((r) => (r.WEB_VITAL_LCP = "web_vital_lcp", r.WEB_VITAL_FCP = "web_vital_fcp", r.WEB_VITAL_CLS = "web_vital_cls", r.WEB_VITAL_INP = "web_vital_inp", r.WEB_VITAL_TTFB = "web_vital_ttfb", r.ERROR = "error", r.CUSTOM = "custom", r.PAGE_LOAD = "page_load", r.REPORTING = "reporting", r.USER_CONTEXT = "user_context", r))(h || {}), G = /* @__PURE__ */ ((r) => (r.PAGE_VIEW = "view", r.PAGE_LOAD = "load", r.CLICK_EVENT = "click", r.HEARTBEAT = "heartbeat", r))(G || {});
+const u = { ...G, ...h };
+class f {
+  constructor() {
+    this.buffer = [], this.FLUSH_INTERVAL = 5e3, this.isInitialized = !1, this.ROUTER_PAGE_META = {}, this.enabledLogging = !1, this.trackingServiceUrl = "";
+  }
+  static getInstance() {
+    return f.instance || (f.instance = new f()), f.instance;
+  }
+  /**
+   * Creates a new instance of InsightsService (non-singleton).
+   * Useful when you need a separate instance with different configuration.
+   * @returns A new InsightsService instance
+   */
+  static createInstance() {
+    return new f();
+  }
+  addPageMeta(e) {
+    this.ROUTER_PAGE_META = { ...this.ROUTER_PAGE_META, ...e };
+  }
+  /**
+   * Initialize InsightService by setting up a periodic timer
+   * to send buffer of events to Tracking backend service. It
+   * also send them when users leave the page.
+   */
+  init({ trackingServiceUrl: e, enabledLogging: i = !1 }) {
+    if (this.isInitialized)
+      throw new Error("InsightsService is already initialized");
+    this.enabledLogging = i, this.trackingServiceUrl = e, this.enabledLogging && console.log("[InsightsService] Initialized with trackingServiceUrl:", e), setInterval(() => {
+      this.flushBuffer();
+    }, this.FLUSH_INTERVAL), document.addEventListener("visibilitychange", () => {
+      document.visibilityState === "hidden" && this.flushBuffer();
+    }), document.defaultView.addEventListener("pagehide", () => {
+      this.flushBuffer();
+    }), this.isInitialized = !0;
+  }
+  /**
+   * Capture page interaction events
+   * @param event - describe action event details
+   */
+  actionEvent(e) {
+    const t = {
+      origin: {
+        pageelement: e.pageelement,
+        pagegroup: this.currentPageGroup,
+        pagename: this.currentPageName
+      },
+      pageviewId: this.currentPageViewId,
+      action_subtype: e.action_subtype,
+      action_type: e.action_type,
+      parameters: e.parameters,
+      url_path: document.defaultView.location.pathname,
+      unixtimestamp: (/* @__PURE__ */ new Date()).valueOf(),
+      type: u.CLICK_EVENT
+    };
+    this.isTrackEventValid(t) && this.buffer.push(t);
+  }
+  isNavigationEnd(e) {
+    return e.url !== void 0 && e.type === 1;
+  }
+  /**
+   * Capture when page is visited
+   * @param event - describe page view event details
+   */
+  pageViewEvent(e) {
+    this.currentPageViewId = this.getUUID();
+    const i = this.isNavigationEnd(e) ? this.getPageMeta(e) : e;
+    this.currentPageGroup = i == null ? void 0 : i.pagegroup, this.currentPageName = i == null ? void 0 : i.pagename, this.enabledLogging && (this.currentPageGroup || console.warn("WARNING - Missing page group"), this.currentPageName || console.warn("WARNING - Missing page name"));
+    const t = {
+      page: {
+        pagegroup: this.currentPageGroup,
+        pagename: this.currentPageName
+      },
+      url_path: document.defaultView.location.pathname,
+      pageviewId: this.currentPageViewId,
+      unixtimestamp: (/* @__PURE__ */ new Date()).valueOf(),
+      type: u.PAGE_VIEW
+    };
+    this.isTrackEventValid(t) && this.buffer.push(t);
+  }
+  /**
+   * Capture when page content is loaded from backend
+   * @param event - describe page load event details
+   */
+  pageLoadEvent(e) {
+    const i = {
+      page: {
+        pagegroup: this.currentPageGroup,
+        pagename: this.currentPageName
+      },
+      page_contents: e.page_contents,
+      pageviewId: this.currentPageViewId,
+      url_path: document.defaultView.location.pathname,
+      unixtimestamp: (/* @__PURE__ */ new Date()).valueOf(),
+      type: G.PAGE_LOAD
+    };
+    this.isTrackEventValid(i) && this.buffer.push(i);
+  }
+  heartBeatEvent(e) {
+    const i = {
+      page: {
+        pagegroup: e.pagegroup,
+        pagename: e.pagename
+      },
+      course_id: e.course_id,
+      module_id: e.module_id,
+      span_ms: e.span_ms,
+      pageviewId: this.currentPageViewId,
+      url_path: document.defaultView.location.pathname,
+      unixtimestamp: (/* @__PURE__ */ new Date()).valueOf(),
+      type: u.HEARTBEAT
+    };
+    this.isTrackEventValid(i) && this.buffer.push(i);
+  }
+  /**
+   * Capture telemetry events (Core Web Vitals, errors, custom metrics)
+   * @param events - Array of telemetry event wrappers to track
+   */
+  telemetryEvent(e) {
+    e.forEach((i) => {
+      this.buffer.push(i);
+    });
+  }
+  /** Send all event in buffer to tracking API service */
+  sendEvents() {
+    this.flushBuffer();
+  }
+  flushBuffer() {
+    const e = this.buffer.splice(0);
+    if (e.length > 0) {
+      const i = document.querySelector('[name="csrf-param"]').content, t = document.querySelector('[name="csrf-token"]').content, n = `${(/* @__PURE__ */ new Date()).valueOf()}`, s = new FormData();
+      s.append("events", JSON.stringify(e)), s.append("local_timestamp", n), s.append(i, t);
+      const o = this.trackingServiceUrl;
+      this.enabledLogging && this.logEvents(e, n);
+      const a = localStorage.getItem("authToken");
+      navigator.sendBeacon && !a ? navigator.sendBeacon(o, s) : B(o, {
+        method: "post",
+        keepalive: !0,
+        body: s
+      });
+    }
+  }
+  logEvents(e, i) {
+    console.groupCollapsed(`Tracking events (${i}})`), console.table(
+      e.map((t) => {
+        var n, s;
+        return t.type === u.WEB_VITAL_LCP || t.type === u.WEB_VITAL_FCP || t.type === u.WEB_VITAL_CLS || t.type === u.WEB_VITAL_INP || t.type === u.WEB_VITAL_TTFB || t.type === u.ERROR || t.type === u.CUSTOM || t.type === u.PAGE_LOAD || t.type === u.REPORTING || t.type === u.USER_CONTEXT ? {
+          type: t.type,
+          pageviewId: t.pageviewId,
+          url_path: t.url_path,
+          timestamp: "timestamp" in t ? t.timestamp : void 0,
+          raw: t
+        } : {
+          type: t.type,
+          pagegroup: "page" in t ? t.page.pagegroup : "origin" in t ? (n = t.origin) == null ? void 0 : n.pagegroup : void 0,
+          pagename: "page" in t ? t.page.pagename : "origin" in t ? (s = t.origin) == null ? void 0 : s.pagename : void 0,
+          pageelement: "origin" in t && t.origin.pagename,
+          pageviewId: t.pageviewId,
+          url_path: t.url_path,
+          unixtimestamp: t.unixtimestamp,
+          raw: t
+        };
+      })
+    ), console.groupEnd();
+  }
+  getUUID() {
+    return crypto.randomUUID().replace(/-/g, "");
+  }
+  getPageMeta(e) {
+    const i = Object.keys(this.ROUTER_PAGE_META).find((t) => new RegExp(t).test(e.url));
+    return this.ROUTER_PAGE_META[`${i}`];
+  }
+  isTrackEventValid(e) {
+    var i, t, n, s, o;
+    return "page" in e ? ((t = (i = e.page) == null ? void 0 : i.pagegroup) == null ? void 0 : t.length) > 0 && ((s = (n = e.page) == null ? void 0 : n.pagename) == null ? void 0 : s.length) > 0 : "origin" in e ? e.origin.pagegroup.length > 0 && ((o = e.origin.pagename) == null ? void 0 : o.length) > 0 : !1;
+  }
+}
+const J = 5e3;
+class b {
+  // Private constructor to enforce singleton pattern.
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  constructor() {
+    this._heartbeatTimer = null, this._config = null, this._isInitialized = !1, this._insightsService = null, this.sendHeartbeat = () => {
+      if (!this._isInitialized || !this._config || !this._insightsService) {
+        this._log("ERROR: Cannot send heartbeat, service not initialized.");
+        return;
+      }
+      document.hasFocus() || this._config.settings.isTinCan ? (this._log("Sending heartbeat."), this._insightsService.heartBeatEvent({
+        ...this.getPageMeta(),
+        course_id: this._config.data.courseId,
+        module_id: this._config.data.moduleId,
+        span_ms: this._config.settings.heartbeatIntervalMs ?? J
+      })) : this._log("Document does not have focus, skipping heartbeat.");
+    }, this.handleVisibilityChange = () => {
+      document.visibilityState === "visible" ? (this._log("Tab became visible, sending heartbeat."), this.sendHeartbeat()) : this._log("Tab became hidden.");
+    }, this.setupEventListeners = () => {
+      window.addEventListener("visibilitychange", this.handleVisibilityChange);
+    }, this.removeEventListeners = () => {
+      window.removeEventListener("visibilitychange", this.handleVisibilityChange);
+    };
+  }
+  static getInstance() {
+    return b.instance || (b.instance = new b()), b.instance;
+  }
+  get _isDevMode() {
+    return !1;
+  }
+  _log(...e) {
+    this._isDevMode && console.log("[TimeTrackingHealthService]", ...e);
+  }
+  /**
+   * Initializes the time tracking health service.
+   * @param config - The configuration object for the health service.
+   * @param insightsService - An instance of the InsightsService.
+   */
+  init(e) {
+    if (this._isInitialized) {
+      this._log("WARN: TimeTrackingHealthService is already initialized. Call teardown() first to re-initialize.");
+      return;
+    }
+    if (this._log("Initializing TimeTrackingHealthService with config:", e), !e.settings)
+      throw new Error("TimeTrackingHealthService config is missing required settings");
+    this._config = e, this._insightsService = f.getInstance(), this._insightsService || this._insightsService.init({
+      trackingServiceUrl: e.settings.trackingServiceUrl,
+      enabledLogging: e.settings.enabledLogging
+    }), this._isInitialized = !0;
+  }
+  /**
+   * Starts the time tracking heartbeat.
+   */
+  start() {
+    if (!this._isInitialized || !this._config) {
+      this._log("ERROR: TimeTrackingHealthService is not initialized. Call init() before starting.");
+      return;
+    }
+    const e = this._config.settings.heartbeatIntervalMs ?? J;
+    this._log(`Starting time tracking heartbeat timer (${e / 1e3}s interval).`), this.sendHeartbeat(), this._heartbeatTimer = setInterval(this.sendHeartbeat, e), this.setupEventListeners();
+  }
+  /**
+   * Stops the time tracking heartbeat.
+   */
+  teardown() {
+    this._heartbeatTimer && (clearInterval(this._heartbeatTimer), this._heartbeatTimer = null, this._isInitialized = !1, this._config = null, this._log("Cleared time tracking heartbeat timer.")), this.removeEventListeners();
+  }
+  getPageMeta() {
+    return {
+      pagegroup: this._config.data.pagegroup,
+      pagename: this._config.data.pagename
+    };
+  }
+}
+class y {
+  // Private constructor to enforce singleton pattern.
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  constructor() {
+    this._heartbeatTimer = null, this._progressionErrorOccurred = !1, this._config = null, this._isInitialized = !1, this.healthCheck = async () => {
+      if (this._progressionErrorOccurred) {
+        this._log("Progression error already occurred. Stopping heartbeat."), this.teardown();
+        return;
+      }
+      const e = this._config;
+      if (!e) return;
+      const { session: i, settings: t } = e, n = `${t.healthCheckUrl}?slt=${i.scormToken}&tincandata_id=${i.tincanDataId}&component_id=${i.componentId}&skip_session_renew=true`;
+      try {
+        const s = await B(n, { method: "HEAD", cache: "no-store" });
+        if (s.ok) {
+          this._log("Tin Can API ping successful.");
+          return;
+        }
+        (s.status === 401 || s.status === 500) && (this._log(`WARN: Critical error detected (status ${s.status}). Handling progression error.`), this.handleProgressionError(s.status));
+      } catch (s) {
+        this._log("ERROR: Network error during Tin Can API health check:", s);
+      }
+    };
+  }
+  static getInstance() {
+    return y.instance || (y.instance = new y()), y.instance;
+  }
+  get _isDevMode() {
+    return !1;
+  }
+  _log(...e) {
+    this._isDevMode && console.log("[TincanHealthService]", ...e);
+  }
+  /**
+   * Initializes the Tin Can health service.
+   * @param config - The configuration object for the health service.
+   * @returns
+   */
+  init(e) {
+    if (this._isInitialized) {
+      this._log("WARN: TincanHealthService is already initialized. Call teardown() first to re-initialize.");
+      return;
+    }
+    if (!e.session || !e.settings || !e.callbacks)
+      throw new Error("TincanHealthService config is missing required groups: session, settings, callbacks");
+    this._config = e, this._isInitialized = !0, this._progressionErrorOccurred = !1;
+  }
+  /**
+   * Starts the Tin Can progression health monitoring.
+   * @returns
+   */
+  start() {
+    var i;
+    if (!this._isInitialized) {
+      this._log("ERROR: TincanHealthService is not initialized. Call init() before starting.");
+      return;
+    }
+    this.teardown();
+    const e = (i = this._config) == null ? void 0 : i.settings.heartbeatIntervalMs;
+    e && (this._log(`Starting Tin Can heartbeat timer (${e / 1e3}s interval).`), this._heartbeatTimer = setInterval(this.healthCheck, e));
+  }
+  /**
+   * Stops the Tin Can health monitoring.
+   * @returns
+   */
+  teardown() {
+    this._heartbeatTimer && (clearInterval(this._heartbeatTimer), this._heartbeatTimer = null, this._log("Cleared Tin Can heartbeat timer."));
+  }
+  /**
+   * Handles progression errors by stopping the heartbeat and showing an error dialog.
+   * @param httpStatus - The HTTP status code indicating the type of error.
+   */
+  handleProgressionError(e) {
+    this._progressionErrorOccurred = !0, this.teardown(), this.showProgressionErrorDialog(e), this.sendAnalytics();
+  }
+  /**
+   * Shows a dialog to inform the user about a progression error.
+   * @param httpStatus - The HTTP status code indicating the type of error.
+   */
+  showProgressionErrorDialog(e) {
+    const i = this._config;
+    if (!i) return;
+    const { callbacks: t } = i;
+    t.forceCloseContentWindow();
+    const n = String(O("lua.progression.tincan.health.error_title")), s = String(e === 401 ? O("lua.progression.tincan.health.error_unauthorized") : O("lua.progression.tincan.health.error_server")), o = () => {
+      typeof t.tinCanClosed == "function" && t.tinCanClosed();
+    };
+    typeof t.luPopoverNotify == "function" ? t.luPopoverNotify(n, s).then(o) : (alert(s), o());
+  }
+  /**
+   * Sends an analytics beacon to track progression interruptions.
+   */
+  sendAnalytics() {
+    var l, I;
+    const e = (l = document.querySelector('meta[name="csrf-param"]')) == null ? void 0 : l.content, i = (I = document.querySelector('meta[name="csrf-token"]')) == null ? void 0 : I.content;
+    if (!e || !i) {
+      this._log("ERROR: CSRF meta tags not found for analytics.");
+      return;
+    }
+    const t = this._config;
+    if (!t) return;
+    const { session: n, settings: s } = t, o = Date.now().toString(), a = `${s.analyticsUrl}?slt=${n.scormToken}&skip_session_renew=true&_=${o}`, c = new FormData();
+    c.append("local_timestamp", o), c.append(e, i);
+    const d = localStorage.getItem("authToken");
+    navigator.sendBeacon && !d ? navigator.sendBeacon(a, c) : B(a, {
+      method: "POST",
+      body: c,
+      keepalive: !0
+    });
+  }
+}
+let le = -1;
+const S = (r) => {
+  addEventListener("pageshow", (e) => {
+    e.persisted && (le = e.timeStamp, r(e));
+  }, !0);
+}, g = (r, e, i, t) => {
+  let n, s;
+  return (o) => {
+    e.value >= 0 && (o || t) && (s = e.value - (n ?? 0), (s || n === void 0) && (n = e.value, e.delta = s, e.rating = ((a, c) => a > c[1] ? "poor" : a > c[0] ? "needs-improvement" : "good")(e.value, i), r(e)));
+  };
+}, q = (r) => {
+  requestAnimationFrame(() => requestAnimationFrame(() => r()));
+}, K = () => {
+  const r = performance.getEntriesByType("navigation")[0];
+  if (r && r.responseStart > 0 && r.responseStart < performance.now()) return r;
+}, k = () => {
+  const r = K();
+  return (r == null ? void 0 : r.activationStart) ?? 0;
+}, _ = (r, e = -1) => {
+  const i = K();
+  let t = "navigate";
+  return le >= 0 ? t = "back-forward-cache" : i && (document.prerendering || k() > 0 ? t = "prerender" : document.wasDiscarded ? t = "restore" : i.type && (t = i.type.replace(/_/g, "-"))), { name: r, value: e, rating: "good", delta: 0, entries: [], id: `v5-${Date.now()}-${Math.floor(8999999999999 * Math.random()) + 1e12}`, navigationType: t };
+}, N = /* @__PURE__ */ new WeakMap();
+function X(r, e) {
+  return N.get(r) || N.set(r, new e()), N.get(r);
+}
+class ve {
+  constructor() {
+    p(this, "t");
+    p(this, "i", 0);
+    p(this, "o", []);
+  }
+  h(e) {
+    var n;
+    if (e.hadRecentInput) return;
+    const i = this.o[0], t = this.o.at(-1);
+    this.i && i && t && e.startTime - t.startTime < 1e3 && e.startTime - i.startTime < 5e3 ? (this.i += e.value, this.o.push(e)) : (this.i = e.value, this.o = [e]), (n = this.t) == null || n.call(this, e);
+  }
+}
+const R = (r, e, i = {}) => {
+  try {
+    if (PerformanceObserver.supportedEntryTypes.includes(r)) {
+      const t = new PerformanceObserver((n) => {
+        Promise.resolve().then(() => {
+          e(n.getEntries());
+        });
+      });
+      return t.observe({ type: r, buffered: !0, ...i }), t;
+    }
+  } catch {
+  }
+}, Z = (r) => {
+  let e = !1;
+  return () => {
+    e || (r(), e = !0);
+  };
+};
+let T = -1;
+const he = /* @__PURE__ */ new Set(), Y = () => document.visibilityState !== "hidden" || document.prerendering ? 1 / 0 : 0, U = (r) => {
+  if (document.visibilityState === "hidden") {
+    if (r.type === "visibilitychange") for (const e of he) e();
+    isFinite(T) || (T = r.type === "visibilitychange" ? r.timeStamp : 0, removeEventListener("prerenderingchange", U, !0));
+  }
+}, P = () => {
+  var r;
+  if (T < 0) {
+    const e = k();
+    T = (document.prerendering || (r = globalThis.performance.getEntriesByType("visibility-state").filter((t) => t.name === "hidden" && t.startTime > e)[0]) == null ? void 0 : r.startTime) ?? Y(), addEventListener("visibilitychange", U, !0), addEventListener("prerenderingchange", U, !0), S(() => {
+      setTimeout(() => {
+        T = Y();
+      });
+    });
+  }
+  return { get firstHiddenTime() {
+    return T;
+  }, onHidden(e) {
+    he.add(e);
+  } };
+}, A = (r) => {
+  document.prerendering ? addEventListener("prerenderingchange", () => r(), !0) : r();
+}, Q = [1800, 3e3], ue = (r, e = {}) => {
+  A(() => {
+    const i = P();
+    let t, n = _("FCP");
+    const s = R("paint", (o) => {
+      for (const a of o) a.name === "first-contentful-paint" && (s.disconnect(), a.startTime < i.firstHiddenTime && (n.value = Math.max(a.startTime - k(), 0), n.entries.push(a), t(!0)));
+    });
+    s && (t = g(r, n, Q, e.reportAllChanges), S((o) => {
+      n = _("FCP"), t = g(r, n, Q, e.reportAllChanges), q(() => {
+        n.value = performance.now() - o.timeStamp, t(!0);
+      });
+    }));
+  });
+}, ee = [0.1, 0.25], we = (r, e = {}) => {
+  const i = P();
+  ue(Z(() => {
+    let t, n = _("CLS", 0);
+    const s = X(e, ve), o = (c) => {
+      for (const d of c) s.h(d);
+      s.i > n.value && (n.value = s.i, n.entries = s.o, t());
+    }, a = R("layout-shift", o);
+    a && (t = g(r, n, ee, e.reportAllChanges), i.onHidden(() => {
+      o(a.takeRecords()), t(!0);
+    }), S(() => {
+      s.i = 0, n = _("CLS", 0), t = g(r, n, ee, e.reportAllChanges), q(() => t());
+    }), setTimeout(t));
+  }));
+};
+let ge = 0, V = 1 / 0, L = 0;
+const be = (r) => {
+  for (const e of r) e.interactionId && (V = Math.min(V, e.interactionId), L = Math.max(L, e.interactionId), ge = L ? (L - V) / 7 + 1 : 0);
+};
+let H;
+const te = () => H ? ge : performance.interactionCount ?? 0, ye = () => {
+  "interactionCount" in performance || H || (H = R("event", be, { type: "event", buffered: !0, durationThreshold: 0 }));
+};
+let ie = 0;
+class Te {
+  constructor() {
+    p(this, "u", []);
+    p(this, "l", /* @__PURE__ */ new Map());
+    p(this, "m");
+    p(this, "p");
+  }
+  v() {
+    ie = te(), this.u.length = 0, this.l.clear();
+  }
+  L() {
+    const e = Math.min(this.u.length - 1, Math.floor((te() - ie) / 50));
+    return this.u[e];
+  }
+  h(e) {
+    var n, s;
+    if ((n = this.m) == null || n.call(this, e), !e.interactionId && e.entryType !== "first-input") return;
+    const i = this.u.at(-1);
+    let t = this.l.get(e.interactionId);
+    if (t || this.u.length < 10 || e.duration > i.P) {
+      if (t ? e.duration > t.P ? (t.entries = [e], t.P = e.duration) : e.duration === t.P && e.startTime === t.entries[0].startTime && t.entries.push(e) : (t = { id: e.interactionId, entries: [e], P: e.duration }, this.l.set(t.id, t), this.u.push(t)), this.u.sort((o, a) => a.P - o.P), this.u.length > 10) {
+        const o = this.u.splice(10);
+        for (const a of o) this.l.delete(a.id);
+      }
+      (s = this.p) == null || s.call(this, t);
+    }
+  }
+}
+const _e = (r) => {
+  const e = globalThis.requestIdleCallback || setTimeout;
+  document.visibilityState === "hidden" ? r() : (r = Z(r), addEventListener("visibilitychange", r, { once: !0, capture: !0 }), e(() => {
+    r(), removeEventListener("visibilitychange", r, { capture: !0 });
+  }));
+}, ne = [200, 500], Ee = (r, e = {}) => {
+  if (!globalThis.PerformanceEventTiming || !("interactionId" in PerformanceEventTiming.prototype)) return;
+  const i = P();
+  A(() => {
+    ye();
+    let t, n = _("INP");
+    const s = X(e, Te), o = (c) => {
+      _e(() => {
+        for (const l of c) s.h(l);
+        const d = s.L();
+        d && d.P !== n.value && (n.value = d.P, n.entries = d.entries, t());
+      });
+    }, a = R("event", o, { durationThreshold: e.durationThreshold ?? 40 });
+    t = g(r, n, ne, e.reportAllChanges), a && (a.observe({ type: "first-input", buffered: !0 }), i.onHidden(() => {
+      o(a.takeRecords()), t(!0);
+    }), S(() => {
+      s.v(), n = _("INP"), t = g(r, n, ne, e.reportAllChanges);
+    }));
+  });
+};
+class Se {
+  constructor() {
+    p(this, "m");
+  }
+  h(e) {
+    var i;
+    (i = this.m) == null || i.call(this, e);
+  }
+}
+const re = [2500, 4e3], ke = (r, e = {}) => {
+  A(() => {
+    const i = P();
+    let t, n = _("LCP");
+    const s = X(e, Se), o = (c) => {
+      e.reportAllChanges || (c = c.slice(-1));
+      for (const d of c) s.h(d), d.startTime < i.firstHiddenTime && (n.value = Math.max(d.startTime - k(), 0), n.entries = [d], t());
+    }, a = R("largest-contentful-paint", o);
+    if (a) {
+      t = g(r, n, re, e.reportAllChanges);
+      const c = Z(() => {
+        o(a.takeRecords()), a.disconnect(), t(!0);
+      }), d = (l) => {
+        l.isTrusted && (_e(c), removeEventListener(l.type, d, { capture: !0 }));
+      };
+      for (const l of ["keydown", "click", "visibilitychange"]) addEventListener(l, d, { capture: !0 });
+      S((l) => {
+        n = _("LCP"), t = g(r, n, re, e.reportAllChanges), q(() => {
+          n.value = performance.now() - l.timeStamp, t(!0);
+        });
+      });
+    }
+  });
+}, se = [800, 1800], $ = (r) => {
+  document.prerendering ? A(() => $(r)) : document.readyState !== "complete" ? addEventListener("load", () => $(r), !0) : setTimeout(r);
+}, Re = (r, e = {}) => {
+  let i = _("TTFB"), t = g(r, i, se, e.reportAllChanges);
+  $(() => {
+    const n = K();
+    n && (i.value = Math.max(n.responseStart - k(), 0), i.entries = [n], t(!0), S(() => {
+      i = _("TTFB", 0), t = g(r, i, se, e.reportAllChanges), t(!0);
+    }));
+  });
+};
+class D {
+  constructor(e, i = !1) {
+    this._onEvent = e, this._enabledLogging = i;
+  }
+  _log(...e) {
+    this._enabledLogging && console.log(`[${this.constructor.name}]`, ...e);
+  }
+}
+function M(r) {
+  if (r.id)
+    return `#${r.id}`;
+  if (r.className && typeof r.className == "string") {
+    const e = r.className.split(" ").filter((i) => i).slice(0, 2).join(".");
+    return `${r.tagName.toLowerCase()}${e ? "." + e : ""}`;
+  }
+  return r.tagName.toLowerCase();
+}
+function Ie() {
+  if (typeof document > "u") return "complete";
+  switch (document.readyState) {
+    case "loading":
+      return "loading";
+    case "interactive":
+      return "dom_interactive";
+    case "complete":
+      return "complete";
+    default:
+      return "complete";
+  }
+}
+class Ce extends D {
+  constructor(e, i, t = !1) {
+    super(i, t), this._features = e;
+  }
+  /**
+   * Start tracking Web Vitals
+   */
+  start() {
+    if (!this._features.hasPerformanceObserver) {
+      this._log("PerformanceObserver not available, skipping Web Vitals tracking");
+      return;
+    }
+    try {
+      ke((e) => this._handleMetric(e), { reportAllChanges: !0 }), ue((e) => this._handleMetric(e)), we((e) => this._handleMetric(e), { reportAllChanges: !1 }), Ee((e) => this._handleMetric(e), { reportAllChanges: !1 }), Re((e) => this._handleMetric(e)), this._setupPageLoad(), this._log("Web Vitals tracking started");
+    } catch (e) {
+      this._log("ERROR: Failed to setup Web Vitals", e);
+    }
+  }
+  /**
+   * Stop tracking and clean up
+   * Note: The web-vitals library doesn't provide cleanup functions,
+   * so observers will continue until page unload
+   */
+  stop() {
+    this._log("Web Vitals tracking stopped (observers remain active)");
+  }
+  /**
+   * Handle metric updates from web-vitals library
+   */
+  _handleMetric(e) {
+    const i = {
+      name: e.name,
+      value: e.value,
+      rating: e.rating,
+      timestamp: Date.now(),
+      element: this._getElementFromAttribution(e),
+      load_state: Ie()
+    }, t = this._getEventTypeForMetric(e.name);
+    this._onEvent({ type: t, data: i }), this._log(`${e.name}: ${e.value.toFixed(2)} (${e.rating})`);
+  }
+  /**
+   * Map Web Vital metric name to specific telemetry event type
+   */
+  _getEventTypeForMetric(e) {
+    switch (e) {
+      case "LCP":
+        return h.WEB_VITAL_LCP;
+      case "FCP":
+        return h.WEB_VITAL_FCP;
+      case "CLS":
+        return h.WEB_VITAL_CLS;
+      case "INP":
+        return h.WEB_VITAL_INP;
+      case "TTFB":
+        return h.WEB_VITAL_TTFB;
+      default:
+        return this._log(`WARN: Unknown Web Vital metric: ${e}`), h.WEB_VITAL_LCP;
+    }
+  }
+  /**
+   * Extract element information from metric attribution data
+   */
+  _getElementFromAttribution(e) {
+    const t = e.attribution;
+    if (t)
+      try {
+        switch (e.name) {
+          case "LCP": {
+            const n = t;
+            return n.element ? M(n.element) : void 0;
+          }
+          case "CLS": {
+            const n = t;
+            return n.largestShiftTarget ? M(n.largestShiftTarget) : void 0;
+          }
+          case "INP": {
+            const n = t;
+            return n.interactionTarget ? M(n.interactionTarget) : void 0;
+          }
+          default:
+            return;
+        }
+      } catch (n) {
+        this._log("Failed to extract element from attribution", n);
+        return;
+      }
+  }
+  /**
+   * Setup page load metric tracking (not part of Core Web Vitals)
+   */
+  _setupPageLoad() {
+    if (typeof performance.getEntriesByType != "function") return;
+    const e = () => {
+      const i = performance.getEntriesByType("navigation");
+      if (i.length === 0) return;
+      const t = i[0], n = {
+        load_time: t.loadEventEnd - t.fetchStart,
+        dom_content_loaded_time: t.domContentLoadedEventEnd - t.fetchStart,
+        timestamp: Date.now()
+      };
+      this._onEvent({ type: h.PAGE_LOAD, data: n }), this._log(
+        `Page load: ${n.load_time.toFixed(2)}ms, DOMContentLoaded: ${n.dom_content_loaded_time.toFixed(2)}ms`
+      );
+    };
+    document.readyState === "complete" ? e() : window.addEventListener("load", e, { once: !0 });
+  }
+}
+const E = class E extends D {
+  constructor(e, i, t, n = !1) {
+    super(e, n), this._handleError = (s) => {
+      try {
+        if (!this._isErrorEvent(s)) {
+          this._log("Received non-ErrorEvent in error handler");
+          return;
+        }
+        const o = this._normalizeErrorMessage(s.message), a = this._safeSerializeStack(s.error), c = this._sanitizeUrl(s.filename || window.location.href), d = this._normalizeLineNumber(s.lineno), l = this._normalizeColumnNumber(s.colno), I = {
+          message: o,
+          stack: a,
+          url: c,
+          line: d,
+          column: l,
+          is_third_party: this._isThirdPartyError(s.filename),
+          timestamp: Date.now(),
+          user_agent: navigator.userAgent,
+          navigation_type: this._navigationType
+        };
+        this._onEvent({ type: h.ERROR, data: I });
+      } catch (o) {
+        this._log("Error in _handleError:", o);
+      }
+    }, this._handleRejection = (s) => {
+      try {
+        if (!this._isPromiseRejectionEvent(s)) {
+          this._log("Received non-PromiseRejectionEvent in rejection handler");
+          return;
+        }
+        const a = s.reason;
+        let c, d;
+        a instanceof Error ? (c = this._normalizeErrorMessage(a.message), d = this._safeSerializeStack(a)) : typeof a == "string" ? c = this._normalizeErrorMessage(a) : (a == null, c = String(a));
+        const l = {
+          message: c,
+          stack: d,
+          url: this._sanitizeUrl(window.location.href),
+          is_third_party: !1,
+          // Promise rejections are always considered app errors
+          timestamp: Date.now(),
+          user_agent: navigator.userAgent,
+          navigation_type: this._navigationType
+        };
+        this._onEvent({ type: h.ERROR, data: l });
+      } catch (o) {
+        this._log("Error in _handleRejection:", o);
+      }
+    }, this._navigationType = i, this._appOriginPatterns = t;
+  }
+  /**
+   * Start tracking errors
+   */
+  start() {
+    window.addEventListener("error", this._handleError), window.addEventListener("unhandledrejection", this._handleRejection), this._log("Error tracking started");
+  }
+  /**
+   * Stop tracking errors
+   */
+  stop() {
+    window.removeEventListener("error", this._handleError), window.removeEventListener("unhandledrejection", this._handleRejection), this._log("Error tracking stopped");
+  }
+  _isThirdPartyError(e) {
+    if (!e) return !1;
+    if (E.EXTENSION_PATTERNS.some((t) => e.startsWith(t)) || E.CDN_PATTERNS.some((t) => e.includes(t)))
+      return !0;
+    const i = window.location.origin;
+    return e.startsWith(i) ? !1 : this._appOriginPatterns ? !this._appOriginPatterns.some((t) => e.includes(t)) : !0;
+  }
+  /**
+   * Type guard to check if event is an ErrorEvent
+   */
+  _isErrorEvent(e) {
+    return "message" in e && "filename" in e;
+  }
+  /**
+   * Type guard to check if event is a PromiseRejectionEvent
+   */
+  _isPromiseRejectionEvent(e) {
+    return "reason" in e && "promise" in e;
+  }
+  /**
+   * Safely serialize error stack trace, handling circular references
+   */
+  _safeSerializeStack(e) {
+    if (!(!e || typeof e != "object"))
+      try {
+        const i = e.stack;
+        return typeof i == "string" ? i.length > 1e4 ? i.substring(0, 1e4) + "...[truncated]" : i : void 0;
+      } catch (i) {
+        this._log("Failed to access error stack:", i);
+        return;
+      }
+  }
+  /**
+   * Normalize error message, handling cross-origin "Script error" and privacy concerns
+   */
+  _normalizeErrorMessage(e) {
+    return !e || typeof e != "string" ? "Unknown error" : e === "Script error." || e === "Script error" ? "Script error (cross-origin)" : this._filterPII(e);
+  }
+  /**
+   * Normalize line number (handle undefined, 0, and negative values)
+   */
+  _normalizeLineNumber(e) {
+    if (!(e == null || e === 0))
+      return e > 0 ? e : void 0;
+  }
+  /**
+   * Normalize column number (handle undefined, 0, and negative values)
+   */
+  _normalizeColumnNumber(e) {
+    if (!(e == null || e === 0))
+      return e > 0 ? e : void 0;
+  }
+  /**
+   * Sanitize URLs to remove sensitive query parameters
+   */
+  _sanitizeUrl(e) {
+    if (!e || typeof e != "string")
+      return window.location.href;
+    try {
+      const i = new URL(e);
+      return [
+        "token",
+        "access_token",
+        "refresh_token",
+        "api_key",
+        "apikey",
+        "key",
+        "secret",
+        "password",
+        "pwd",
+        "session",
+        "sessionid",
+        "auth",
+        "authorization"
+      ].forEach((n) => {
+        i.searchParams.has(n) && i.searchParams.set(n, "[REDACTED]");
+      }), i.toString();
+    } catch {
+      return e;
+    }
+  }
+  /**
+   * Filter personally identifiable information from error messages
+   */
+  _filterPII(e) {
+    let i = e;
+    return i = i.replace(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g, "[EMAIL_REDACTED]"), i = i.replace(/\b\d{3}[-.]?\d{3}[-.]?\d{4}\b/g, "[PHONE_REDACTED]"), i = i.replace(/\b\+\d{1,3}[-.\s]?\d{1,14}\b/g, "[PHONE_REDACTED]"), i = i.replace(/\b\d{4}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}\b/g, "[CARD_REDACTED]"), i = i.replace(/\b\d{3}-\d{2}-\d{4}\b/g, "[SSN_REDACTED]"), i = i.replace(/\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/g, "[IP_REDACTED]"), i = i.replace(/eyJ[a-zA-Z0-9_-]*\.eyJ[a-zA-Z0-9_-]*\.[a-zA-Z0-9_-]*/g, "[JWT_REDACTED]"), i;
+  }
+};
+E.CDN_PATTERNS = [
+  "cdn.jsdelivr.net",
+  "unpkg.com",
+  "cdnjs.cloudflare.com",
+  "cdn.jsdelivr.net",
+  "ajax.googleapis.com",
+  "code.jquery.com",
+  "stackpath.bootstrapcdn.com",
+  "maxcdn.bootstrapcdn.com"
+], E.EXTENSION_PATTERNS = [
+  "chrome-extension://",
+  "moz-extension://",
+  "safari-extension://",
+  "edge-extension://"
+];
+let j = E;
+class Le extends D {
+  constructor(e, i = !1) {
+    super(e, i), this._observer = null, this._isSupported = typeof ReportingObserver < "u";
+  }
+  /**
+   * Start tracking browser reports
+   */
+  start() {
+    if (!this._isSupported) {
+      this._log("ReportingObserver not supported in this browser");
+      return;
+    }
+    try {
+      this._observer = new ReportingObserver(
+        (e) => {
+          for (const i of e)
+            this._handleReport(i);
+        },
+        { buffered: !0 }
+      ), this._observer.observe(), this._log("Reporting tracking started");
+    } catch (e) {
+      this._log("ERROR: Failed to setup ReportingObserver", e);
+    }
+  }
+  /**
+   * Stop tracking reports
+   */
+  stop() {
+    this._observer && (this._observer.disconnect(), this._observer = null, this._log("Reporting tracking stopped"));
+  }
+  _handleReport(e) {
+    const i = {
+      type: e.type,
+      url: e.url,
+      timestamp: Date.now(),
+      body: this._sanitizeBody(e.body)
+    };
+    this._onEvent({ type: h.REPORTING, data: i });
+  }
+  _sanitizeBody(e) {
+    if (!e) return {};
+    const i = {};
+    try {
+      const t = e;
+      "id" in t && (i.id = t.id), "message" in t && (i.message = t.message), "sourceFile" in t && (i.sourceFile = t.sourceFile), "lineNumber" in t && (i.lineNumber = t.lineNumber), "columnNumber" in t && (i.columnNumber = t.columnNumber), "anticipatedRemoval" in t && (i.anticipatedRemoval = t.anticipatedRemoval), "blockedURL" in t && (i.blockedURL = t.blockedURL), "disposition" in t && (i.disposition = t.disposition), "effectiveDirective" in t && (i.effectiveDirective = t.effectiveDirective), "violatedDirective" in t && (i.violatedDirective = t.violatedDirective), "reason" in t && (i.reason = t.reason);
+    } catch (t) {
+      this._log("ERROR: Failed to sanitize report body", t);
+    }
+    return i;
+  }
+}
+class z {
+  static detect() {
+    const e = this._detectPlatformType(), i = "ontouchstart" in window, t = this._detectPointerType(), n = this._detectHoverCapability(), s = navigator.hardwareConcurrency;
+    let o;
+    "deviceMemory" in navigator && typeof navigator.deviceMemory == "number" && (o = navigator.deviceMemory);
+    const a = typeof navigator.maxTouchPoints == "number" ? navigator.maxTouchPoints : void 0, c = this._detectBrowser(), d = this._detectOS(), l = this._detectWebView();
+    return {
+      cpu: s,
+      memory: o,
+      max_touch_points: a,
+      platform: e,
+      input_touch: i,
+      input_pointer: t,
+      input_hover: n,
+      browser_name: c.name,
+      browser_version: c.version,
+      is_web_view: l,
+      os_name: d.name,
+      os_version: d.version
+    };
+  }
+  static _detectPlatformType() {
+    const e = window.innerWidth;
+    return "ontouchstart" in window || navigator.maxTouchPoints && navigator.maxTouchPoints > 0 ? e < 768 ? "mobile" : "tablet" : "desktop";
+  }
+  static _detectPointerType() {
+    return window.matchMedia && window.matchMedia("(pointer: coarse)").matches ? "coarse" : window.matchMedia && window.matchMedia("(pointer: fine)").matches ? "fine" : "none";
+  }
+  static _detectHoverCapability() {
+    return window.matchMedia ? window.matchMedia("(hover: hover)").matches : !1;
+  }
+  /**
+   * Detect browser name and version
+   */
+  static _detectBrowser() {
+    const e = navigator.userAgent;
+    let i = "Unknown", t = "Unknown";
+    if (e.includes("Edg/")) {
+      i = "Edge";
+      const n = e.match(/Edg\/(\d+\.\d+)/);
+      n && (t = n[1]);
+    } else if (e.includes("Chrome/") && !e.includes("Edg/")) {
+      i = "Chrome";
+      const n = e.match(/Chrome\/(\d+\.\d+)/);
+      n && (t = n[1]);
+    } else if (e.includes("Safari/") && !e.includes("Chrome/")) {
+      i = "Safari";
+      const n = e.match(/Version\/(\d+\.\d+)/);
+      n && (t = n[1]);
+    } else if (e.includes("Firefox/")) {
+      i = "Firefox";
+      const n = e.match(/Firefox\/(\d+\.\d+)/);
+      n && (t = n[1]);
+    } else if (e.includes("OPR/")) {
+      i = "Opera";
+      const n = e.match(/OPR\/(\d+\.\d+)/);
+      n && (t = n[1]);
+    }
+    return { name: i, version: t };
+  }
+  /**
+   * Detect operating system name and version
+   */
+  static _detectOS() {
+    const e = navigator.userAgent, i = navigator.platform;
+    let t = "Unknown", n;
+    if (e.includes("Windows"))
+      t = "Windows", e.includes("Windows NT 10.0") ? n = "10" : e.includes("Windows NT 6.3") ? n = "8.1" : e.includes("Windows NT 6.2") ? n = "8" : e.includes("Windows NT 6.1") && (n = "7");
+    else if (e.includes("Mac OS X")) {
+      t = "macOS";
+      const s = e.match(/Mac OS X (\d+[._]\d+(?:[._]\d+)?)/);
+      s && (n = s[1].replace(/_/g, "."));
+    } else if (e.includes("iPhone") || e.includes("iPad") || e.includes("iPod")) {
+      t = "iOS";
+      const s = e.match(/OS (\d+[._]\d+(?:[._]\d+)?)/);
+      s && (n = s[1].replace(/_/g, "."));
+    } else if (e.includes("Android")) {
+      t = "Android";
+      const s = e.match(/Android (\d+\.\d+)/);
+      s && (n = s[1]);
+    } else e.includes("Linux") || i.includes("Linux") ? t = "Linux" : e.includes("CrOS") && (t = "ChromeOS");
+    return { name: t, version: n };
+  }
+  /**
+   * Detect if running in a WebView
+   */
+  static _detectWebView() {
+    const e = navigator.userAgent, i = (e.includes("iPhone") || e.includes("iPad")) && e.includes("AppleWebKit") && !e.includes("Safari/"), t = e.includes("Android") && e.includes("wv"), n = e.includes("FBAN") || e.includes("FBAV") || e.includes("Instagram"), s = e.includes("Line/") || e.includes("MicroMessenger/");
+    return i || t || n || s;
+  }
+}
+class m {
+  /**
+   * Capture display information (screen dimensions, resolution, pixel ratio)
+   */
+  static captureDisplay() {
+    return {
+      screen_width: this.bucketScreenDimension(screen.width),
+      screen_height: this.bucketScreenDimension(screen.height),
+      device_pixel_ratio: window.devicePixelRatio || 1,
+      orientation: this.getOrientation()
+    };
+  }
+  static captureViewport() {
+    const e = window.innerWidth, i = window.innerHeight;
+    return {
+      viewport_width: e,
+      viewport_height: i,
+      visual_scale: this.getVisualScale(),
+      is_iframe: this.detectIframe()
+    };
+  }
+  /** Bucket to common resolutions to reduce unique values. */
+  static bucketScreenDimension(e) {
+    return [320, 375, 414, 768, 1024, 1280, 1366, 1440, 1920, 2560, 3840].reduce((t, n) => Math.abs(n - e) < Math.abs(t - e) ? n : t);
+  }
+  static getOrientation() {
+    return screen.orientation ? screen.orientation.type.startsWith("portrait") ? "portrait" : "landscape" : window.innerHeight > window.innerWidth ? "portrait" : "landscape";
+  }
+  static getVisualScale() {
+    if ("visualViewport" in window && window.visualViewport)
+      return Math.round(window.visualViewport.scale * 10) / 10;
+  }
+  static detectIframe() {
+    try {
+      return window.self !== window.top;
+    } catch {
+      return !0;
+    }
+  }
+  static calculateViewportCategory(e) {
+    return e < 768 ? "mobile" : e < 1024 ? "tablet" : "desktop";
+  }
+  static isSignificantViewportChange(e, i, t) {
+    if (!e) return !0;
+    const n = Math.abs(e.viewport_width - i.viewport_width), s = Math.abs(e.viewport_height - i.viewport_height);
+    return n > t || s > t;
+  }
+}
+class v {
+  /**
+   * Capture current network information
+   */
+  static capture() {
+    if (!("connection" in navigator)) {
+      const n = this.estimateFromNavigationTiming();
+      return {
+        effective_type: n.effectiveType,
+        downlink_mbps: void 0,
+        rtt_ms: n.rttMs,
+        save_data_enabled: !1
+      };
+    }
+    const e = navigator.connection;
+    if (!e)
+      return {
+        effective_type: void 0,
+        downlink_mbps: void 0,
+        rtt_ms: void 0,
+        save_data_enabled: !1
+      };
+    const i = e.downlink, t = e.rtt;
+    return {
+      effective_type: e.effectiveType,
+      downlink_mbps: i,
+      rtt_ms: t,
+      save_data_enabled: e.saveData || !1
+    };
+  }
+  /**
+   * Estimate network type from Navigation Timing API
+   */
+  static estimateFromNavigationTiming() {
+    try {
+      const e = performance.getEntriesByType("navigation")[0];
+      if (e && e.responseStart && e.requestStart) {
+        const i = e.responseStart - e.requestStart;
+        let t;
+        return i < 50 ? t = "4g" : i < 150 ? t = "3g" : i < 400 ? t = "2g" : t = "slow-2g", { effectiveType: t, rttMs: i };
+      }
+    } catch {
+    }
+    return { effectiveType: "4g" };
+  }
+  /**
+   * Check if network change is significant based on thresholds
+   */
+  static isSignificantChange(e, i, t) {
+    return e.effective_type !== i.effective_type || e.rtt_ms !== void 0 && i.rtt_ms !== void 0 && Math.abs(e.rtt_ms - i.rtt_ms) > t.rtt ? !0 : e.downlink_mbps !== void 0 && i.downlink_mbps !== void 0 && Math.abs(e.downlink_mbps - i.downlink_mbps) > t.downlink;
+  }
+  /**
+   * Get the Network Information API connection object if available
+   */
+  static getConnection() {
+    return "connection" in navigator && navigator.connection || null;
+  }
+}
+class W {
+  static detect() {
+    const e = navigator.language, i = navigator.languages ? Array.from(navigator.languages) : [e];
+    return {
+      language: e,
+      languages: i,
+      timezone: this._detectTimezone(),
+      direction: this._detectDirection(),
+      color_scheme: this._detectColorScheme(),
+      prefers_reduced_motion: this._detectReducedMotion(),
+      prefers_reduced_data: this._detectReducedData(),
+      prefers_contrast: this._detectContrast()
+    };
+  }
+  static _detectTimezone() {
+    try {
+      return Intl.DateTimeFormat().resolvedOptions().timeZone;
+    } catch {
+      return "Unknown";
+    }
+  }
+  static _detectDirection() {
+    if (typeof document < "u") {
+      const e = document.dir || document.documentElement.dir;
+      if (e === "rtl" || e === "ltr")
+        return e;
+      const i = window.getComputedStyle(document.documentElement).direction;
+      if (i === "rtl" || i === "ltr")
+        return i;
+      const t = navigator.language.toLowerCase();
+      if (["ar", "he", "fa", "ur", "yi"].some((s) => t.startsWith(s)))
+        return "rtl";
+    }
+    return "ltr";
+  }
+  static _detectColorScheme() {
+    if (window.matchMedia)
+      return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "no-preference";
+  }
+  static _detectReducedMotion() {
+    return window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)").matches : !1;
+  }
+  static _detectReducedData() {
+    return window.matchMedia ? window.matchMedia("(prefers-reduced-data: reduce)").matches : !1;
+  }
+  static _detectContrast() {
+    if (window.matchMedia) {
+      if (window.matchMedia("(prefers-contrast: more)").matches) return "more";
+      if (window.matchMedia("(prefers-contrast: less)").matches) return "less";
+      if (window.matchMedia("(prefers-contrast: no-preference)").matches) return "no-preference";
+    }
+  }
+}
+class F {
+  /**
+   * Detect ancestor origins (synchronous)
+   */
+  static detect() {
+    return {
+      ancestor_origins: this._getAncestorOrigins()
+    };
+  }
+  /**
+   * Get ancestor origins from window.location
+   */
+  static _getAncestorOrigins() {
+    try {
+      return window.location.ancestorOrigins ? Array.from(window.location.ancestorOrigins) : [];
+    } catch {
+      return [];
+    }
+  }
+}
+const ae = "__telemetry_user_context_sent__";
+class Pe extends D {
+  // Mbps
+  constructor(e, i, t = !1, n) {
+    super(e, t), this._currentContext = null, this._networkListener = null, this._resizeListener = null, this._orientationListener = null, this._resizeTimeout = null, this.VIEWPORT_CHANGE_THRESHOLD = 100, this.NETWORK_RTT_THRESHOLD = 100, this.NETWORK_DOWNLINK_THRESHOLD = 2, this._sessionId = i, this._customContextData = n;
+  }
+  /** Capture initial context and start monitoring for changes. */
+  async start() {
+    if (this._hasUserContextBeenSent()) {
+      this._log("User context already sent in this session, skipping initial capture"), this._setupMonitoring();
+      return;
+    }
+    await this._captureInitialContext(), this._setupMonitoring(), this._log("Context monitoring started");
+  }
+  stop() {
+    this._cleanupMonitoring(), this._log("Context monitoring stopped");
+  }
+  /**
+   * Check if user-context has already been sent in this session
+   */
+  _hasUserContextBeenSent() {
+    try {
+      const e = sessionStorage.getItem(ae), i = sessionStorage.getItem("__telemetry_session_id__");
+      return e === "true" && i === this._sessionId;
+    } catch {
+      return !1;
+    }
+  }
+  /**
+   * Mark that user-context has been sent in this session
+   */
+  _markUserContextAsSent() {
+    try {
+      sessionStorage.setItem(ae, "true");
+    } catch {
+    }
+  }
+  /**
+   * Capture initial context with both sync and async data
+   * Only emits one event after all data is collected
+   */
+  async _captureInitialContext() {
+    try {
+      const e = {
+        timestamp: Date.now(),
+        ...z.detect(),
+        ...m.captureDisplay(),
+        ...m.captureViewport(),
+        ...v.capture(),
+        ...C.detect(),
+        ...W.detect(),
+        ...F.detect()
+      }, i = await C.captureAsync(), t = {
+        ...e,
+        ...i,
+        timestamp: Date.now(),
+        // Update timestamp to reflect completion
+        ...this._getPrefixedCustomData()
+      };
+      this._currentContext = t, this._onEvent({
+        type: h.USER_CONTEXT,
+        data: t
+      }), this._markUserContextAsSent(), this._log("Initial context captured with async capabilities");
+    } catch (e) {
+      this._log("WARN: Failed to capture async capabilities, sending sync data only", {
+        error: e instanceof Error ? e.message : String(e),
+        stack: e instanceof Error ? e.stack : void 0
+      });
+      const i = {
+        timestamp: Date.now(),
+        ...z.detect(),
+        ...m.captureDisplay(),
+        ...m.captureViewport(),
+        ...v.capture(),
+        ...C.detect(),
+        ...W.detect(),
+        ...F.detect(),
+        ...this._getPrefixedCustomData()
+      };
+      this._currentContext = i, this._onEvent({
+        type: h.USER_CONTEXT,
+        data: i
+      }), this._markUserContextAsSent();
+    }
+  }
+  /**
+   * Capture context updates (for monitoring changes)
+   * Used by event handlers after initial capture
+   */
+  _captureContextUpdate() {
+    const e = {
+      timestamp: Date.now(),
+      ...z.detect(),
+      ...m.captureDisplay(),
+      ...m.captureViewport(),
+      ...v.capture(),
+      ...C.detect(),
+      ...W.detect(),
+      ...F.detect()
+    };
+    this._currentContext = e, this._onEvent({ type: h.USER_CONTEXT, data: e });
+  }
+  /**
+   * Get custom context data with context_ prefix
+   */
+  _getPrefixedCustomData() {
+    if (!this._customContextData || Object.keys(this._customContextData).length === 0)
+      return {};
+    const e = {};
+    for (const [i, t] of Object.entries(this._customContextData))
+      e[`context_${i}`] = t;
+    return e;
+  }
+  _setupMonitoring() {
+    const e = v.getConnection();
+    e && (this._networkListener = () => this._handleNetworkChange(), e.addEventListener("change", this._networkListener)), this._resizeListener = () => {
+      this._resizeTimeout && clearTimeout(this._resizeTimeout), this._resizeTimeout = setTimeout(() => {
+        this._handleViewportChange(), this._resizeTimeout = null;
+      }, 100);
+    }, window.addEventListener("resize", this._resizeListener), screen.orientation && (this._orientationListener = () => this._handleOrientationChange(), screen.orientation.addEventListener("change", this._orientationListener));
+  }
+  _cleanupMonitoring() {
+    const e = v.getConnection();
+    e && this._networkListener && e.removeEventListener("change", this._networkListener), this._resizeListener && window.removeEventListener("resize", this._resizeListener), this._resizeTimeout && (clearTimeout(this._resizeTimeout), this._resizeTimeout = null), screen.orientation && this._orientationListener && screen.orientation.removeEventListener("change", this._orientationListener);
+  }
+  _handleNetworkChange() {
+    const e = v.capture(), i = this._currentContext;
+    i && v.isSignificantChange(i, e, {
+      rtt: this.NETWORK_RTT_THRESHOLD,
+      downlink: this.NETWORK_DOWNLINK_THRESHOLD
+    }) && (this._captureContextUpdate(), this._log("Significant network change detected"));
+  }
+  _handleViewportChange() {
+    const e = m.captureViewport(), i = this._currentContext;
+    m.isSignificantViewportChange(i, e, this.VIEWPORT_CHANGE_THRESHOLD) && (this._captureContextUpdate(), this._log("Significant viewport change detected"));
+  }
+  _handleOrientationChange() {
+    this._captureContextUpdate(), this._log("Orientation changed");
+  }
+}
+const Ae = 5e3, oe = 100;
+class w {
+  constructor() {
+    this._isInitialized = !1, this._config = null, this._insightsService = null, this._eventBuffer = [], this._flushTimer = null, this._webVitalsTracker = null, this._errorTracker = null, this._reportingTracker = null, this._userContextTracker = null, this._handleVisibilityChange = () => {
+      document.visibilityState === "hidden" && this.flush();
+    }, this._handlePageHide = () => {
+      this.flush();
+    }, this._handlePageShow = (e) => {
+      e.persisted && (this._log("Page restored from bfcache"), this._webVitalsTracker && (this._webVitalsTracker.stop(), this._webVitalsTracker.start()));
+    }, this._features = this._detectFeatures(), this._navigationType = this._getNavigationType(), this._sessionId = this._generateSessionId();
+  }
+  static getInstance() {
+    return w._instance || (w._instance = new w()), w._instance;
+  }
+  /** Initialize telemetry with tracking endpoint and configuration. */
+  static init(e) {
+    const i = w.getInstance();
+    if (i._isInitialized) {
+      i._log("WARN: TelemetryService already initialized");
+      return;
+    }
+    performance.mark("telemetry:init:start");
+    try {
+      i._config = {
+        maxBufferSize: oe,
+        enabledLogging: !1,
+        enableWebVitals: !1,
+        enableErrorTracking: !1,
+        enableReporting: !1,
+        enableUserContext: !1,
+        ...e
+      }, i._insightsService = f.createInstance(), i._insightsService.init({
+        trackingServiceUrl: e.trackingServiceUrl,
+        enabledLogging: e.enabledLogging
+      }), i._isInitialized = !0, i.setup(), performance.mark("telemetry:init:end"), performance.measure("telemetry:init", "telemetry:init:start", "telemetry:init:end");
+      const t = performance.getEntriesByName("telemetry:init")[0];
+      t && t.duration > 50 && i._log(`WARN: Init took ${t.duration.toFixed(2)}ms (target <50ms)`);
+    } catch (t) {
+      i._log("ERROR: Failed to initialize TelemetryService", t);
+    }
+  }
+  /** Start all trackers and monitoring. */
+  async setup() {
+    if (!this._isInitialized || !this._config) {
+      this._log("ERROR: Cannot setup, service not initialized");
+      return;
+    }
+    try {
+      this._config.enableUserContext && (this._userContextTracker = new Pe(
+        (e) => this._bufferEvent(e),
+        this._sessionId,
+        this._config.enabledLogging,
+        this._config.customContextData
+      ), await this._userContextTracker.start(), this._log("UserContextTracker started")), this._config.enableWebVitals && (this._webVitalsTracker = new Ce(
+        this._features,
+        (e) => this._bufferEvent(e),
+        this._config.enabledLogging
+      ), this._webVitalsTracker.start(), this._log("WebVitalsTracker started")), this._config.enableErrorTracking && (this._errorTracker = new j(
+        (e) => this._bufferEvent(e),
+        this._navigationType,
+        this._config.appOriginPatterns,
+        this._config.enabledLogging
+      ), this._errorTracker.start(), this._log("ErrorTracker started")), this._config.enableReporting && (this._reportingTracker = new Le((e) => this._bufferEvent(e), this._config.enabledLogging), this._reportingTracker.start(), this._log("ReportingTracker started")), this._startFlushTimer(), this._setupVisibilityHandlers(), this._log("TelemetryService started");
+    } catch (e) {
+      this._log("ERROR: Failed to setup TelemetryService", e);
+    }
+  }
+  /** Stop all trackers and flush remaining events. */
+  teardown() {
+    try {
+      this._webVitalsTracker && (this._webVitalsTracker.stop(), this._webVitalsTracker = null), this._errorTracker && (this._errorTracker.stop(), this._errorTracker = null), this._reportingTracker && (this._reportingTracker.stop(), this._reportingTracker = null), this._userContextTracker && (this._userContextTracker.stop(), this._userContextTracker = null), this._flushTimer && (clearInterval(this._flushTimer), this._flushTimer = null), document.removeEventListener("visibilitychange", this._handleVisibilityChange), window.removeEventListener("pagehide", this._handlePageHide), window.removeEventListener("pageshow", this._handlePageShow), this.flush(), this._isInitialized = !1, this._config = null, this._log("TelemetryService stopped");
+    } catch (e) {
+      this._log("ERROR: Failed to teardown TelemetryService", e);
+    }
+  }
+  trackMetric(e, i) {
+    if (typeof e != "string" || typeof i != "number") return;
+    const t = {
+      name: e,
+      value: i,
+      timestamp: Date.now()
+    };
+    this._bufferEvent({ type: h.CUSTOM, data: t });
+  }
+  /** Create performance mark for debugging in DevTools. */
+  mark(e, i) {
+    if (this._features.hasPerformanceMark)
+      try {
+        i !== void 0 ? performance.mark(e, { detail: i }) : performance.mark(e);
+      } catch {
+      }
+  }
+  flush() {
+    const e = this._eventBuffer.splice(0);
+    if (e.length === 0) return;
+    const i = {
+      events: e,
+      sessionId: this._sessionId,
+      timestamp: Date.now()
+    };
+    this._sendPayload(i);
+  }
+  _detectFeatures() {
+    return {
+      hasPerformanceObserver: typeof PerformanceObserver < "u",
+      hasSessionStorage: this._checkSessionStorage(),
+      hasIndexedDB: typeof indexedDB < "u",
+      hasPerformanceMark: typeof performance < "u" && typeof performance.mark == "function",
+      hasVisibilityAPI: typeof document.visibilityState < "u"
+    };
+  }
+  _checkSessionStorage() {
+    try {
+      const e = "__test__";
+      return sessionStorage.setItem(e, e), sessionStorage.removeItem(e), !0;
+    } catch {
+      return !1;
+    }
+  }
+  /**
+   * Generate or retrieve session ID that persists across page reloads.
+   * Required to link all events within the same browsing session.
+   */
+  _generateSessionId() {
+    const e = "__telemetry_session_id__";
+    if (this._features.hasSessionStorage)
+      try {
+        const t = sessionStorage.getItem(e);
+        if (t)
+          return this._log(`Reusing existing session ID: ${t}`), t;
+      } catch (t) {
+        this._log("WARN: Failed to read session ID from sessionStorage", t);
+      }
+    let i;
+    if (typeof crypto < "u" && crypto.randomUUID ? i = crypto.randomUUID().replace(/-/g, "") : i = Date.now().toString(36) + Math.random().toString(36).substring(2, 15), this._features.hasSessionStorage)
+      try {
+        sessionStorage.setItem(e, i), this._log(`Created new session ID: ${i}`);
+      } catch (t) {
+        this._log("WARN: Failed to store session ID in sessionStorage", t);
+      }
+    return i;
+  }
+  _getNavigationType() {
+    if (typeof performance > "u" || !performance.getEntriesByType)
+      return "navigate";
+    const e = performance.getEntriesByType("navigation");
+    return e.length > 0 ? e[0].type : "navigate";
+  }
+  _bufferEvent(e) {
+    var n;
+    const i = ((n = this._config) == null ? void 0 : n.maxBufferSize) ?? oe;
+    this._eventBuffer.some((s) => s.type === e.type) && (this._log(`Flushing buffer due to duplicate event type: ${e.type}`), this.flush()), this._eventBuffer.length >= i && this._eventBuffer.shift(), this._eventBuffer.push(e);
+  }
+  _startFlushTimer() {
+    this._flushTimer = setInterval(() => {
+      this.flush();
+    }, Ae);
+  }
+  _setupVisibilityHandlers() {
+    this._features.hasVisibilityAPI && document.addEventListener("visibilitychange", this._handleVisibilityChange), window.addEventListener("pagehide", this._handlePageHide), window.addEventListener("pageshow", this._handlePageShow);
+  }
+  _sendPayload(e) {
+    if (!this._insightsService) {
+      this._log("ERROR: InsightsService not available");
+      return;
+    }
+    try {
+      const i = e.events.map((t) => ({
+        type: t.type,
+        sessionId: this._sessionId,
+        path: window.location.pathname,
+        ...t.data
+      }));
+      this._insightsService.telemetryEvent(i), this._insightsService.sendEvents(), this._log(`Sent ${e.events.length} events`);
+    } catch (i) {
+      this._log("ERROR: Failed to send payload", i);
+    }
+  }
+  _log(...e) {
+    var i;
+    (i = this._config) != null && i.enabledLogging && console.log("[TelemetryService]", ...e);
+  }
+}
+const De = {
+  mode: "production",
+  LupHelper: de,
+  InsightsService: f,
+  EnrollmentHelper: me,
+  TincanHealthService: y,
+  TimeTrackingHealthService: b,
+  TelemetryService: w
+}, Oe = "CrossFrameworkLib" in window;
+var ce;
+const xe = ((ce = window == null ? void 0 : window.CrossFrameworkLib) == null ? void 0 : ce.mode) === "development";
+(!Oe || !xe) && (window.CrossFrameworkLib = De);
+window.dispatchEvent(new CustomEvent("cross-framework-lib:ready"));
+export {
+  De as CrossFrameworkLib
+};
+//# sourceMappingURL=cross-framework-lib.js.map

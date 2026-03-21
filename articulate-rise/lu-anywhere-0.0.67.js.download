@@ -1,0 +1,978 @@
+import { T as y, M as p } from "./chunks/course-player-50XEBzNe.js";
+const c = ["lua-video", "lua-text", "lua-scorm", "lua-page", "lua-live-announcer", "lua-document", "lua-course-player", "lua-course-card", "lua-content-details", "lua-summary-panel", "lua-bundle-product-page", "lua-bundle-course-list", "lua-audio", "lua-ai-smart-search", "luds-toggle", "luds-toast", "luds-timeline", "luds-tag", "luds-tabs", "luds-select", "luds-radiobutton-group", "luds-radiobutton", "luds-progress", "luds-modal", "luds-loading", "luds-loader", "luds-icon", "luds-error", "luds-checkbox-group", "luds-checkbox", "luds-button"], g = /luptest.com/.test(window.location.origin), d = /lupdev.com/.test(window.location.origin);
+function a(...s) {
+  (g || d) && console.log("[LuAnywhere]", ...s);
+}
+let o = null;
+async function r(s = []) {
+  await Promise.all(
+    s.map((e) => {
+      if (e.startsWith("luds")) {
+        const n = e.replace("luds-", "");
+        return l(`./design-system/${n}/${n}.ts`);
+      }
+      if (e.startsWith("lua")) {
+        const n = e.replace("lua-", "");
+        return h(`./entry-components/${n}/${n}.ts`);
+      }
+    })
+  );
+}
+async function u() {
+  const e = [...document.querySelectorAll(c.join(", "))].map((n) => n.tagName.toLowerCase());
+  await r(e), a("Autoloaded components:", e), dispatchEvent(
+    new CustomEvent("lua-ready", {
+      detail: {
+        api: Object.freeze(i),
+        tagNames: e
+      }
+    })
+  );
+}
+function t() {
+  o !== null && cancelAnimationFrame(o), o = requestAnimationFrame(() => {
+    u(), o = null;
+  });
+}
+async function m() {
+  await r(c.filter((s) => s.startsWith("luds"))), a("LUDS components loaded");
+}
+const i = {
+  loadModule: r,
+  autoload: t,
+  loadLuds: m,
+  version: "0.0.67+41c02c9",
+  services: {
+    modal: p,
+    toast: y
+  },
+  mode: "production"
+};
+Object.setPrototypeOf(i, {
+  /**
+   * This method is used to set the preload resource for the entry components
+   */
+  _setPreloadResource() {
+    typeof arguments[0] == "object" && arguments[0] !== null && arguments[0].constructor === Object && dispatchEvent(new CustomEvent("lua-preload-resource", { detail: arguments[0] }));
+  }
+});
+(function(s) {
+  m(), document.addEventListener("DOMContentLoaded", () => {
+    t();
+  }), window.addEventListener("load", () => {
+    t();
+  }), window.addEventListener("hashchange", () => {
+    t();
+  }), window.addEventListener("popstate", () => {
+    t();
+  }), "navigation" in window && window.navigation && window.navigation.addEventListener("navigatesuccess", () => {
+    t();
+  }), s.LuAnywhere = Object.freeze(i);
+})(window);
+function l(s) {
+  switch (s) {
+    case "./design-system/breadcrumb/breadcrumbs":
+    case "./design-system/breadcrumb/breadcrumbs.ts":
+      return import("./chunks/breadcrumb-BFmWA0w9.js").then((e) => e.j);
+    case "./design-system/button/button":
+    case "./design-system/button/button.ts":
+      return import("./chunks/button-DPLMbX5F.js").then((e) => e.b);
+    case "./design-system/checkbox/checkbox":
+    case "./design-system/checkbox/checkbox.ts":
+      return import("./chunks/checkbox-BYzUGJ36.js").then((e) => e.c);
+    case "./design-system/checkbox-group/checkbox-group":
+    case "./design-system/checkbox-group/checkbox-group.ts":
+      return import("./chunks/checkbox-group-Dqa8XdSO.js");
+    case "./design-system/dropodown-menu/dropdown-menu":
+    case "./design-system/dropodown-menu/dropdown-menu.ts":
+      return import("./chunks/dropodown-menu-DaHR139X.js");
+    case "./design-system/error/error":
+    case "./design-system/error/error.ts":
+      return import("./chunks/error-BLChwhiv.js");
+    case "./design-system/icon/icon":
+    case "./design-system/icon/icon.ts":
+      return import("./chunks/breadcrumb-BFmWA0w9.js").then((e) => e.i);
+    case "./design-system/icon/icons":
+    case "./design-system/icon/icons.ts":
+      return import("./chunks/icons-DJCaCCVQ.js");
+    case "./design-system/loader/loader":
+    case "./design-system/loader/loader.ts":
+      return import("./chunks/loader-B2aI3Y8d.js").then((e) => e.l);
+    case "./design-system/loading/loading":
+    case "./design-system/loading/loading.ts":
+      return import("./chunks/loading-XU4Q5LuN.js");
+    case "./design-system/modal/modal-backdrop.service":
+    case "./design-system/modal/modal-backdrop.service.ts":
+      return import("./chunks/modal-BbcNY68l.js").then((e) => e.m);
+    case "./design-system/modal/modal":
+    case "./design-system/modal/modal.ts":
+      return import("./chunks/modal-BbcNY68l.js").then((e) => e.a);
+    case "./design-system/modal-v2/modal_v2":
+    case "./design-system/modal-v2/modal_v2.ts":
+      return import("./chunks/modal-v2-TchEc6TP.js");
+    case "./design-system/progress/progress":
+    case "./design-system/progress/progress.ts":
+      return import("./chunks/progress-DvPBgmyD.js");
+    case "./design-system/radiobutton/radiobutton":
+    case "./design-system/radiobutton/radiobutton.ts":
+      return import("./chunks/radiobutton-mTAr5vLx.js").then((e) => e.r);
+    case "./design-system/radiobutton/radiobutton.type":
+    case "./design-system/radiobutton/radiobutton.type.ts":
+      return import("./chunks/radiobutton-mTAr5vLx.js").then((e) => e.b);
+    case "./design-system/radiobutton-group/radiobutton-group":
+    case "./design-system/radiobutton-group/radiobutton-group.ts":
+      return import("./chunks/radiobutton-group-DpkoMY-d.js");
+    case "./design-system/select/select":
+    case "./design-system/select/select.ts":
+      return import("./chunks/select-Bg9XgJyo.js").then((e) => e.s);
+    case "./design-system/tabs/tab":
+    case "./design-system/tabs/tab.ts":
+      return import("./chunks/tabs-BeecXI9B.js").then((e) => e.a);
+    case "./design-system/tabs/tabs.styles":
+    case "./design-system/tabs/tabs.styles.ts":
+      return import("./chunks/tabs-BeecXI9B.js").then((e) => e.t);
+    case "./design-system/tabs/tabs":
+    case "./design-system/tabs/tabs.ts":
+      return import("./chunks/tabs-BeecXI9B.js").then((e) => e.b);
+    case "./design-system/tag/tag":
+    case "./design-system/tag/tag.ts":
+      return import("./chunks/tag-3spBXAsy.js");
+    case "./design-system/timeline/timeline":
+    case "./design-system/timeline/timeline.ts":
+      return import("./chunks/timeline-CVzRF9iQ.js");
+    case "./design-system/toast/toast-stack":
+    case "./design-system/toast/toast-stack.ts":
+      return import("./chunks/toast-C21RwKB4.js").then((e) => e.a);
+    case "./design-system/toast/toast":
+    case "./design-system/toast/toast.ts":
+      return import("./chunks/toast-C21RwKB4.js").then((e) => e.t);
+    case "./design-system/toggle/toggle.model":
+    case "./design-system/toggle/toggle.model.ts":
+      return import("./chunks/toggle-CDMPncwC.js").then((e) => e.t);
+    case "./design-system/toggle/toggle":
+    case "./design-system/toggle/toggle.ts":
+      return import("./chunks/toggle-CDMPncwC.js").then((e) => e.a);
+    case "./design-system/icon/iconography/action_tracker":
+    case "./design-system/icon/iconography/action_tracker.ts":
+      return import("./chunks/action_tracker-BiMtvYYW.js");
+    case "./design-system/icon/iconography/add":
+    case "./design-system/icon/iconography/add.ts":
+      return import("./chunks/add-CXxI-y-n.js");
+    case "./design-system/icon/iconography/advanced_passwords":
+    case "./design-system/icon/iconography/advanced_passwords.ts":
+      return import("./chunks/advanced_passwords-BZHOYwuv.js");
+    case "./design-system/icon/iconography/ai_scanner_spark":
+    case "./design-system/icon/iconography/ai_scanner_spark.ts":
+      return import("./chunks/ai_scanner_spark-vZfSS3wd.js");
+    case "./design-system/icon/iconography/ai_sparkles":
+    case "./design-system/icon/iconography/ai_sparkles.ts":
+      return import("./chunks/ai_sparkles-BbqWzZre.js");
+    case "./design-system/icon/iconography/alert":
+    case "./design-system/icon/iconography/alert.ts":
+      return import("./chunks/alert-BHrBEh2T.js");
+    case "./design-system/icon/iconography/arrow_down":
+    case "./design-system/icon/iconography/arrow_down.ts":
+      return import("./chunks/arrow_down-B72joSEH.js");
+    case "./design-system/icon/iconography/arrow_left":
+    case "./design-system/icon/iconography/arrow_left.ts":
+      return import("./chunks/arrow_left-C0C2M5a9.js");
+    case "./design-system/icon/iconography/arrow_right":
+    case "./design-system/icon/iconography/arrow_right.ts":
+      return import("./chunks/arrow_right-BpsqEvQL.js");
+    case "./design-system/icon/iconography/arrow_up":
+    case "./design-system/icon/iconography/arrow_up.ts":
+      return import("./chunks/arrow_up-COAe18GZ.js");
+    case "./design-system/icon/iconography/assignment":
+    case "./design-system/icon/iconography/assignment.ts":
+      return import("./chunks/assignment-CGTj1dRA.js");
+    case "./design-system/icon/iconography/association":
+    case "./design-system/icon/iconography/association.ts":
+      return import("./chunks/association-99pJl2KN.js");
+    case "./design-system/icon/iconography/attachment":
+    case "./design-system/icon/iconography/attachment.ts":
+      return import("./chunks/attachment-CaDbw97z.js");
+    case "./design-system/icon/iconography/audio":
+    case "./design-system/icon/iconography/audio.ts":
+      return import("./chunks/audio-DhhYN6PO.js");
+    case "./design-system/icon/iconography/banners":
+    case "./design-system/icon/iconography/banners.ts":
+      return import("./chunks/banners-Dm7OsuxU.js");
+    case "./design-system/icon/iconography/batch_upload":
+    case "./design-system/icon/iconography/batch_upload.ts":
+      return import("./chunks/batch_upload-7se-xPlX.js");
+    case "./design-system/icon/iconography/bill":
+    case "./design-system/icon/iconography/bill.ts":
+      return import("./chunks/bill-C12B2wLp.js");
+    case "./design-system/icon/iconography/blockquote":
+    case "./design-system/icon/iconography/blockquote.ts":
+      return import("./chunks/blockquote-Ipqu7zo6.js");
+    case "./design-system/icon/iconography/bold":
+    case "./design-system/icon/iconography/bold.ts":
+      return import("./chunks/bold-BdNdEwT-.js");
+    case "./design-system/icon/iconography/branch":
+    case "./design-system/icon/iconography/branch.ts":
+      return import("./chunks/branch-DuIk_w9y.js");
+    case "./design-system/icon/iconography/branding":
+    case "./design-system/icon/iconography/branding.ts":
+      return import("./chunks/branding-DOdhq5y4.js");
+    case "./design-system/icon/iconography/bulk_spinner":
+    case "./design-system/icon/iconography/bulk_spinner.ts":
+      return import("./chunks/bulk_spinner-BNKXLg19.js");
+    case "./design-system/icon/iconography/calendar":
+    case "./design-system/icon/iconography/calendar.ts":
+      return import("./chunks/calendar-BzvL9Miq.js");
+    case "./design-system/icon/iconography/calendar_warning":
+    case "./design-system/icon/iconography/calendar_warning.ts":
+      return import("./chunks/calendar_warning-CC534sRR.js");
+    case "./design-system/icon/iconography/canceled":
+    case "./design-system/icon/iconography/canceled.ts":
+      return import("./chunks/canceled-CpbHHghq.js");
+    case "./design-system/icon/iconography/catalog":
+    case "./design-system/icon/iconography/catalog.ts":
+      return import("./chunks/catalog-Oa1dp4jy.js");
+    case "./design-system/icon/iconography/categories":
+    case "./design-system/icon/iconography/categories.ts":
+      return import("./chunks/categories-B7aFR3nj.js");
+    case "./design-system/icon/iconography/center_align":
+    case "./design-system/icon/iconography/center_align.ts":
+      return import("./chunks/center_align-Be1oS3KH.js");
+    case "./design-system/icon/iconography/certificates":
+    case "./design-system/icon/iconography/certificates.ts":
+      return import("./chunks/certificates-C1BFW1ZJ.js");
+    case "./design-system/icon/iconography/chat":
+    case "./design-system/icon/iconography/chat.ts":
+      return import("./chunks/chat-CprMcHtf.js");
+    case "./design-system/icon/iconography/checkbox_mark":
+    case "./design-system/icon/iconography/checkbox_mark.ts":
+      return import("./chunks/checkbox_mark-R91pWP50.js");
+    case "./design-system/icon/iconography/checklist":
+    case "./design-system/icon/iconography/checklist.ts":
+      return import("./chunks/checklist-BQZTulpm.js");
+    case "./design-system/icon/iconography/checkmark":
+    case "./design-system/icon/iconography/checkmark.ts":
+      return import("./chunks/checkmark-Cl8v28CN.js");
+    case "./design-system/icon/iconography/chevron_big_down":
+    case "./design-system/icon/iconography/chevron_big_down.ts":
+      return import("./chunks/chevron_big_down-Pv6lx1k5.js");
+    case "./design-system/icon/iconography/chevron_big_left":
+    case "./design-system/icon/iconography/chevron_big_left.ts":
+      return import("./chunks/chevron_big_left-DwamRnrS.js");
+    case "./design-system/icon/iconography/chevron_big_right":
+    case "./design-system/icon/iconography/chevron_big_right.ts":
+      return import("./chunks/chevron_big_right-B_fWqZcL.js");
+    case "./design-system/icon/iconography/chevron_big_up":
+    case "./design-system/icon/iconography/chevron_big_up.ts":
+      return import("./chunks/chevron_big_up-B9ZYO3Zu.js");
+    case "./design-system/icon/iconography/chevron_down":
+    case "./design-system/icon/iconography/chevron_down.ts":
+      return import("./chunks/chevron_down-D_gOKe7_.js");
+    case "./design-system/icon/iconography/chevron_left":
+    case "./design-system/icon/iconography/chevron_left.ts":
+      return import("./chunks/chevron_left-LTJZCVsj.js");
+    case "./design-system/icon/iconography/chevron_right":
+    case "./design-system/icon/iconography/chevron_right.ts":
+      return import("./chunks/chevron_right-BtQkRnaB.js");
+    case "./design-system/icon/iconography/chevron_up":
+    case "./design-system/icon/iconography/chevron_up.ts":
+      return import("./chunks/chevron_up-UTxxI-3w.js");
+    case "./design-system/icon/iconography/clear":
+    case "./design-system/icon/iconography/clear.ts":
+      return import("./chunks/clear-DGYrvV4Y.js");
+    case "./design-system/icon/iconography/close":
+    case "./design-system/icon/iconography/close.ts":
+      return import("./chunks/close-L0oTPa-P.js");
+    case "./design-system/icon/iconography/completed":
+    case "./design-system/icon/iconography/completed.ts":
+      return import("./chunks/completed-B23H9ogP.js");
+    case "./design-system/icon/iconography/condition":
+    case "./design-system/icon/iconography/condition.ts":
+      return import("./chunks/condition-Ce3QpmDG.js");
+    case "./design-system/icon/iconography/content_integration":
+    case "./design-system/icon/iconography/content_integration.ts":
+      return import("./chunks/content_integration-BL5Ag9AX.js");
+    case "./design-system/icon/iconography/continue_arrow":
+    case "./design-system/icon/iconography/continue_arrow.ts":
+      return import("./chunks/continue_arrow-Cdf1zewn.js");
+    case "./design-system/icon/iconography/copy":
+    case "./design-system/icon/iconography/copy.ts":
+      return import("./chunks/copy-DIbFTon7.js");
+    case "./design-system/icon/iconography/course_settings":
+    case "./design-system/icon/iconography/course_settings.ts":
+      return import("./chunks/course_settings-CFVHm1U8.js");
+    case "./design-system/icon/iconography/courses":
+    case "./design-system/icon/iconography/courses.ts":
+      return import("./chunks/courses-BJ9dAliz.js");
+    case "./design-system/icon/iconography/custom_course":
+    case "./design-system/icon/iconography/custom_course.ts":
+      return import("./chunks/custom_course-DOmIm21m.js");
+    case "./design-system/icon/iconography/custom_email_template":
+    case "./design-system/icon/iconography/custom_email_template.ts":
+      return import("./chunks/custom_email_template-CnL5Tvp9.js");
+    case "./design-system/icon/iconography/custom_user":
+    case "./design-system/icon/iconography/custom_user.ts":
+      return import("./chunks/custom_user-D0IRiPRC.js");
+    case "./design-system/icon/iconography/dashboard":
+    case "./design-system/icon/iconography/dashboard.ts":
+      return import("./chunks/dashboard-D3FKVxX7.js");
+    case "./design-system/icon/iconography/delete_icon":
+    case "./design-system/icon/iconography/delete_icon.ts":
+      return import("./chunks/delete_icon-BcJBwblW.js");
+    case "./design-system/icon/iconography/dislike":
+    case "./design-system/icon/iconography/dislike.ts":
+      return import("./chunks/dislike-Cd5f5Gfd.js");
+    case "./design-system/icon/iconography/download":
+    case "./design-system/icon/iconography/download.ts":
+      return import("./chunks/download-BL0sUSNt.js");
+    case "./design-system/icon/iconography/drag":
+    case "./design-system/icon/iconography/drag.ts":
+      return import("./chunks/drag-CQ1JCYgD.js");
+    case "./design-system/icon/iconography/ecommerce":
+    case "./design-system/icon/iconography/ecommerce.ts":
+      return import("./chunks/ecommerce-VSUgRu9V.js");
+    case "./design-system/icon/iconography/edit":
+    case "./design-system/icon/iconography/edit.ts":
+      return import("./chunks/edit-CIaZ_70D.js");
+    case "./design-system/icon/iconography/email":
+    case "./design-system/icon/iconography/email.ts":
+      return import("./chunks/email-BZZp-aZk.js");
+    case "./design-system/icon/iconography/email_banners":
+    case "./design-system/icon/iconography/email_banners.ts":
+      return import("./chunks/email_banners-Bs9Cb3Vu.js");
+    case "./design-system/icon/iconography/enroll_in_progress":
+    case "./design-system/icon/iconography/enroll_in_progress.ts":
+      return import("./chunks/enroll_in_progress-BNwqQHqo.js");
+    case "./design-system/icon/iconography/enrolled":
+    case "./design-system/icon/iconography/enrolled.ts":
+      return import("./chunks/enrolled-ElF7mphl.js");
+    case "./design-system/icon/iconography/enrollment":
+    case "./design-system/icon/iconography/enrollment.ts":
+      return import("./chunks/enrollment-3zi_eUPd.js");
+    case "./design-system/icon/iconography/exam":
+    case "./design-system/icon/iconography/exam.ts":
+      return import("./chunks/exam-DnJ-1NIS.js");
+    case "./design-system/icon/iconography/export_icon":
+    case "./design-system/icon/iconography/export_icon.ts":
+      return import("./chunks/export_icon-Cptzc-PP.js");
+    case "./design-system/icon/iconography/external_window":
+    case "./design-system/icon/iconography/external_window.ts":
+      return import("./chunks/external_window-D6NCokBQ.js");
+    case "./design-system/icon/iconography/failed":
+    case "./design-system/icon/iconography/failed.ts":
+      return import("./chunks/failed-Btwapj14.js");
+    case "./design-system/icon/iconography/file":
+    case "./design-system/icon/iconography/file.ts":
+      return import("./chunks/file-JixhJWfX.js");
+    case "./design-system/icon/iconography/file_zip":
+    case "./design-system/icon/iconography/file_zip.ts":
+      return import("./chunks/file_zip-CRiMoHP0.js");
+    case "./design-system/icon/iconography/filters":
+    case "./design-system/icon/iconography/filters.ts":
+      return import("./chunks/filters-CYcf1kfy.js");
+    case "./design-system/icon/iconography/forums":
+    case "./design-system/icon/iconography/forums.ts":
+      return import("./chunks/forums-tzR_r_x1.js");
+    case "./design-system/icon/iconography/gamification":
+    case "./design-system/icon/iconography/gamification.ts":
+      return import("./chunks/gamification-CcBhLf-p.js");
+    case "./design-system/icon/iconography/general":
+    case "./design-system/icon/iconography/general.ts":
+      return import("./chunks/general-QiDG4ftC.js");
+    case "./design-system/icon/iconography/grid_view":
+    case "./design-system/icon/iconography/grid_view.ts":
+      return import("./chunks/grid_view-DgkD9wiD.js");
+    case "./design-system/icon/iconography/groups":
+    case "./design-system/icon/iconography/groups.ts":
+      return import("./chunks/groups-y94iYYwi.js");
+    case "./design-system/icon/iconography/hamburger":
+    case "./design-system/icon/iconography/hamburger.ts":
+      return import("./chunks/hamburger-B9HekXz5.js");
+    case "./design-system/icon/iconography/hamburger_menu":
+    case "./design-system/icon/iconography/hamburger_menu.ts":
+      return import("./chunks/hamburger_menu-BS5F6N1h.js");
+    case "./design-system/icon/iconography/history":
+    case "./design-system/icon/iconography/history.ts":
+      return import("./chunks/history-1rkNYB-4.js");
+    case "./design-system/icon/iconography/home":
+    case "./design-system/icon/iconography/home.ts":
+      return import("./chunks/home-JRX_nWnE.js");
+    case "./design-system/icon/iconography/hr_integration":
+    case "./design-system/icon/iconography/hr_integration.ts":
+      return import("./chunks/hr_integration-BS4Et83Z.js");
+    case "./design-system/icon/iconography/ilt_center":
+    case "./design-system/icon/iconography/ilt_center.ts":
+      return import("./chunks/ilt_center-6CCXaXPN.js");
+    case "./design-system/icon/iconography/ilt_locations":
+    case "./design-system/icon/iconography/ilt_locations.ts":
+      return import("./chunks/ilt_locations-kZq9CGDO.js");
+    case "./design-system/icon/iconography/image":
+    case "./design-system/icon/iconography/image.ts":
+      return import("./chunks/image-Dsx0kise.js");
+    case "./design-system/icon/iconography/info":
+    case "./design-system/icon/iconography/info.ts":
+      return import("./chunks/info-Dfo8agtb.js");
+    case "./design-system/icon/iconography/instructor":
+    case "./design-system/icon/iconography/instructor.ts":
+      return import("./chunks/instructor-CTREyjqR.js");
+    case "./design-system/icon/iconography/integrations":
+    case "./design-system/icon/iconography/integrations.ts":
+      return import("./chunks/integrations-BjfjBYHi.js");
+    case "./design-system/icon/iconography/italic":
+    case "./design-system/icon/iconography/italic.ts":
+      return import("./chunks/italic-CUxqOlw4.js");
+    case "./design-system/icon/iconography/kebab_menu":
+    case "./design-system/icon/iconography/kebab_menu.ts":
+      return import("./chunks/kebab_menu-BfPFe8bq.js");
+    case "./design-system/icon/iconography/knowledge_base":
+    case "./design-system/icon/iconography/knowledge_base.ts":
+      return import("./chunks/knowledge_base-CDpBZo3y.js");
+    case "./design-system/icon/iconography/language":
+    case "./design-system/icon/iconography/language.ts":
+      return import("./chunks/language-CX4y1OOl.js");
+    case "./design-system/icon/iconography/learning_credits":
+    case "./design-system/icon/iconography/learning_credits.ts":
+      return import("./chunks/learning_credits-4qhhspGK.js");
+    case "./design-system/icon/iconography/learning_path":
+    case "./design-system/icon/iconography/learning_path.ts":
+      return import("./chunks/learning_path-BWnUKdT8.js");
+    case "./design-system/icon/iconography/left_align":
+    case "./design-system/icon/iconography/left_align.ts":
+      return import("./chunks/left_align-B1huaQEt.js");
+    case "./design-system/icon/iconography/lia":
+    case "./design-system/icon/iconography/lia.ts":
+      return import("./chunks/lia-B9LXQW1K.js");
+    case "./design-system/icon/iconography/library":
+    case "./design-system/icon/iconography/library.ts":
+      return import("./chunks/library-CgLgjMsf.js");
+    case "./design-system/icon/iconography/like":
+    case "./design-system/icon/iconography/like.ts":
+      return import("./chunks/like-Cc1yMIJ7.js");
+    case "./design-system/icon/iconography/link":
+    case "./design-system/icon/iconography/link.ts":
+      return import("./chunks/link-BHVzkohV.js");
+    case "./design-system/icon/iconography/linkedin":
+    case "./design-system/icon/iconography/linkedin.ts":
+      return import("./chunks/linkedin-CtzAfyTb.js");
+    case "./design-system/icon/iconography/list_view":
+    case "./design-system/icon/iconography/list_view.ts":
+      return import("./chunks/list_view-B7sY_dto.js");
+    case "./design-system/icon/iconography/location":
+    case "./design-system/icon/iconography/location.ts":
+      return import("./chunks/location-DbmvvYIf.js");
+    case "./design-system/icon/iconography/lock":
+    case "./design-system/icon/iconography/lock.ts":
+      return import("./chunks/lock-Bwu5u1to.js");
+    case "./design-system/icon/iconography/login_screen":
+    case "./design-system/icon/iconography/login_screen.ts":
+      return import("./chunks/login_screen-Bo8sTQaw.js");
+    case "./design-system/icon/iconography/logout":
+    case "./design-system/icon/iconography/logout.ts":
+      return import("./chunks/logout-_6D3o3wP.js");
+    case "./design-system/icon/iconography/lrs_tincan":
+    case "./design-system/icon/iconography/lrs_tincan.ts":
+      return import("./chunks/lrs_tincan-CKo9fUGG.js");
+    case "./design-system/icon/iconography/maximise":
+    case "./design-system/icon/iconography/maximise.ts":
+      return import("./chunks/maximise-CFROhR-F.js");
+    case "./design-system/icon/iconography/membership_pricing":
+    case "./design-system/icon/iconography/membership_pricing.ts":
+      return import("./chunks/membership_pricing-CovHJcQ6.js");
+    case "./design-system/icon/iconography/membership_types":
+    case "./design-system/icon/iconography/membership_types.ts":
+      return import("./chunks/membership_types-C1qtfxil.js");
+    case "./design-system/icon/iconography/merge":
+    case "./design-system/icon/iconography/merge.ts":
+      return import("./chunks/merge-DgzUSyor.js");
+    case "./design-system/icon/iconography/messages":
+    case "./design-system/icon/iconography/messages.ts":
+      return import("./chunks/messages-sJhq38zo.js");
+    case "./design-system/icon/iconography/minimise":
+    case "./design-system/icon/iconography/minimise.ts":
+      return import("./chunks/minimise-Dwsd9HxX.js");
+    case "./design-system/icon/iconography/minus":
+    case "./design-system/icon/iconography/minus.ts":
+      return import("./chunks/minus-DgMD1X2c.js");
+    case "./design-system/icon/iconography/module":
+    case "./design-system/icon/iconography/module.ts":
+      return import("./chunks/module-CnycyCZC.js");
+    case "./design-system/icon/iconography/multi_portal":
+    case "./design-system/icon/iconography/multi_portal.ts":
+      return import("./chunks/multi_portal-15KLBdDI.js");
+    case "./design-system/icon/iconography/multi_session":
+    case "./design-system/icon/iconography/multi_session.ts":
+      return import("./chunks/multi_session-Clzw2k1o.js");
+    case "./design-system/icon/iconography/my_portal":
+    case "./design-system/icon/iconography/my_portal.ts":
+      return import("./chunks/my_portal-D2dp2fS9.js");
+    case "./design-system/icon/iconography/ordered_list":
+    case "./design-system/icon/iconography/ordered_list.ts":
+      return import("./chunks/ordered_list-CgKytI56.js");
+    case "./design-system/icon/iconography/passed":
+    case "./design-system/icon/iconography/passed.ts":
+      return import("./chunks/passed-DU0jNHDD.js");
+    case "./design-system/icon/iconography/pending_request":
+    case "./design-system/icon/iconography/pending_request.ts":
+      return import("./chunks/pending_request-CcL3e8cF.js");
+    case "./design-system/icon/iconography/pending_review":
+    case "./design-system/icon/iconography/pending_review.ts":
+      return import("./chunks/pending_review-LQAZRmBq.js");
+    case "./design-system/icon/iconography/placeholder":
+    case "./design-system/icon/iconography/placeholder.ts":
+      return import("./chunks/placeholder-DLDDdU8f.js");
+    case "./design-system/icon/iconography/policies":
+    case "./design-system/icon/iconography/policies.ts":
+      return import("./chunks/policies-C7UEz0YZ.js");
+    case "./design-system/icon/iconography/portal_switch":
+    case "./design-system/icon/iconography/portal_switch.ts":
+      return import("./chunks/portal_switch-CvmE0MtO.js");
+    case "./design-system/icon/iconography/portals":
+    case "./design-system/icon/iconography/portals.ts":
+      return import("./chunks/portals-BsY-2TYY.js");
+    case "./design-system/icon/iconography/preview":
+    case "./design-system/icon/iconography/preview.ts":
+      return import("./chunks/preview-Cwt1IRda.js");
+    case "./design-system/icon/iconography/progress_report":
+    case "./design-system/icon/iconography/progress_report.ts":
+      return import("./chunks/progress_report-DL2HXu7z.js");
+    case "./design-system/icon/iconography/publish":
+    case "./design-system/icon/iconography/publish.ts":
+      return import("./chunks/publish-DhYsFzx0.js");
+    case "./design-system/icon/iconography/question":
+    case "./design-system/icon/iconography/question.ts":
+      return import("./chunks/question-CB2WmccK.js");
+    case "./design-system/icon/iconography/rating_star":
+    case "./design-system/icon/iconography/rating_star.ts":
+      return import("./chunks/rating_star-fxKtlYRH.js");
+    case "./design-system/icon/iconography/rating_star_full":
+    case "./design-system/icon/iconography/rating_star_full.ts":
+      return import("./chunks/rating_star_full-BST1voTh.js");
+    case "./design-system/icon/iconography/rating_star_half":
+    case "./design-system/icon/iconography/rating_star_half.ts":
+      return import("./chunks/rating_star_half-B4R0Vcz3.js");
+    case "./design-system/icon/iconography/recaptcha":
+    case "./design-system/icon/iconography/recaptcha.ts":
+      return import("./chunks/recaptcha-CgcyxwEG.js");
+    case "./design-system/icon/iconography/record":
+    case "./design-system/icon/iconography/record.ts":
+      return import("./chunks/record-KEU1FaDZ.js");
+    case "./design-system/icon/iconography/register":
+    case "./design-system/icon/iconography/register.ts":
+      return import("./chunks/register-Cb0vtfZm.js");
+    case "./design-system/icon/iconography/remove":
+    case "./design-system/icon/iconography/remove.ts":
+      return import("./chunks/remove-DoIaBnYG.js");
+    case "./design-system/icon/iconography/report_builder":
+    case "./design-system/icon/iconography/report_builder.ts":
+      return import("./chunks/report_builder-CbgzqVRO.js");
+    case "./design-system/icon/iconography/reports":
+    case "./design-system/icon/iconography/reports.ts":
+      return import("./chunks/reports-D5-32R8g.js");
+    case "./design-system/icon/iconography/resources":
+    case "./design-system/icon/iconography/resources.ts":
+      return import("./chunks/resources-BhKG9QlO.js");
+    case "./design-system/icon/iconography/retake_arrow":
+    case "./design-system/icon/iconography/retake_arrow.ts":
+      return import("./chunks/retake_arrow-C4BP_mt-.js");
+    case "./design-system/icon/iconography/reviews":
+    case "./design-system/icon/iconography/reviews.ts":
+      return import("./chunks/reviews-kumAYA9t.js");
+    case "./design-system/icon/iconography/right_align":
+    case "./design-system/icon/iconography/right_align.ts":
+      return import("./chunks/right_align-BVOu11fs.js");
+    case "./design-system/icon/iconography/salesforce":
+    case "./design-system/icon/iconography/salesforce.ts":
+      return import("./chunks/salesforce-DKzR2tSk.js");
+    case "./design-system/icon/iconography/save":
+    case "./design-system/icon/iconography/save.ts":
+      return import("./chunks/save-C4sFMsn3.js");
+    case "./design-system/icon/iconography/scorm":
+    case "./design-system/icon/iconography/scorm.ts":
+      return import("./chunks/scorm-BuUMG4gQ.js");
+    case "./design-system/icon/iconography/search":
+    case "./design-system/icon/iconography/search.ts":
+      return import("./chunks/search-Aatsf8Ah.js");
+    case "./design-system/icon/iconography/security":
+    case "./design-system/icon/iconography/security.ts":
+      return import("./chunks/security-CETb-VyO.js");
+    case "./design-system/icon/iconography/select_x_square":
+    case "./design-system/icon/iconography/select_x_square.ts":
+      return import("./chunks/select_x_square-iAJSUsYg.js");
+    case "./design-system/icon/iconography/self_awarding":
+    case "./design-system/icon/iconography/self_awarding.ts":
+      return import("./chunks/self_awarding-CM_0-SoB.js");
+    case "./design-system/icon/iconography/send":
+    case "./design-system/icon/iconography/send.ts":
+      return import("./chunks/send-DEonGUKs.js");
+    case "./design-system/icon/iconography/session":
+    case "./design-system/icon/iconography/session.ts":
+      return import("./chunks/session-DWPyGMoC.js");
+    case "./design-system/icon/iconography/settings":
+    case "./design-system/icon/iconography/settings.ts":
+      return import("./chunks/settings-Ktx11uHj.js");
+    case "./design-system/icon/iconography/sidebar":
+    case "./design-system/icon/iconography/sidebar.ts":
+      return import("./chunks/sidebar-B2MpsQID.js");
+    case "./design-system/icon/iconography/single_portal":
+    case "./design-system/icon/iconography/single_portal.ts":
+      return import("./chunks/single_portal-BsNGyfBC.js");
+    case "./design-system/icon/iconography/skewer":
+    case "./design-system/icon/iconography/skewer.ts":
+      return import("./chunks/skewer-LCJlxUGf.js");
+    case "./design-system/icon/iconography/social":
+    case "./design-system/icon/iconography/social.ts":
+      return import("./chunks/social-ItDmDpZs.js");
+    case "./design-system/icon/iconography/sort":
+    case "./design-system/icon/iconography/sort.ts":
+      return import("./chunks/sort-B-NE7E-g.js");
+    case "./design-system/icon/iconography/sort_0_9":
+    case "./design-system/icon/iconography/sort_0_9.ts":
+      return import("./chunks/sort_0_9-D77eQjD2.js");
+    case "./design-system/icon/iconography/sort_9_0":
+    case "./design-system/icon/iconography/sort_9_0.ts":
+      return import("./chunks/sort_9_0-DznBGbGM.js");
+    case "./design-system/icon/iconography/sort_a_z":
+    case "./design-system/icon/iconography/sort_a_z.ts":
+      return import("./chunks/sort_a_z-CB-FiFyV.js");
+    case "./design-system/icon/iconography/sort_z_a":
+    case "./design-system/icon/iconography/sort_z_a.ts":
+      return import("./chunks/sort_z_a-tyRx5faJ.js");
+    case "./design-system/icon/iconography/split":
+    case "./design-system/icon/iconography/split.ts":
+      return import("./chunks/lit-BcLAvpHu.js").then((e) => e.p);
+    case "./design-system/icon/iconography/start":
+    case "./design-system/icon/iconography/start.ts":
+      return import("./chunks/start-Bk5-VEsu.js");
+    case "./design-system/icon/iconography/store":
+    case "./design-system/icon/iconography/store.ts":
+      return import("./chunks/store-DE114Ybz.js");
+    case "./design-system/icon/iconography/striketrough":
+    case "./design-system/icon/iconography/striketrough.ts":
+      return import("./chunks/striketrough-BHaNKn7-.js");
+    case "./design-system/icon/iconography/support":
+    case "./design-system/icon/iconography/support.ts":
+      return import("./chunks/support-D7qRsa3X.js");
+    case "./design-system/icon/iconography/survey":
+    case "./design-system/icon/iconography/survey.ts":
+      return import("./chunks/survey-beY3UoLG.js");
+    case "./design-system/icon/iconography/switch_icon":
+    case "./design-system/icon/iconography/switch_icon.ts":
+      return import("./chunks/switch_icon-6a68rGL-.js");
+    case "./design-system/icon/iconography/target":
+    case "./design-system/icon/iconography/target.ts":
+      return import("./chunks/target-BwXcwEn-.js");
+    case "./design-system/icon/iconography/terms":
+    case "./design-system/icon/iconography/terms.ts":
+      return import("./chunks/terms-zYI8RBTq.js");
+    case "./design-system/icon/iconography/text_style":
+    case "./design-system/icon/iconography/text_style.ts":
+      return import("./chunks/text_style-BkAXcPzh.js");
+    case "./design-system/icon/iconography/time":
+    case "./design-system/icon/iconography/time.ts":
+      return import("./chunks/time-Dsorzxs0.js");
+    case "./design-system/icon/iconography/two_fa":
+    case "./design-system/icon/iconography/two_fa.ts":
+      return import("./chunks/two_fa-CnKpNbFy.js");
+    case "./design-system/icon/iconography/underline":
+    case "./design-system/icon/iconography/underline.ts":
+      return import("./chunks/underline-DCfQw-4S.js");
+    case "./design-system/icon/iconography/unlock":
+    case "./design-system/icon/iconography/unlock.ts":
+      return import("./chunks/unlock-DutfgXD2.js");
+    case "./design-system/icon/iconography/user_settings":
+    case "./design-system/icon/iconography/user_settings.ts":
+      return import("./chunks/user_settings-B_WaQc4W.js");
+    case "./design-system/icon/iconography/users":
+    case "./design-system/icon/iconography/users.ts":
+      return import("./chunks/users-enzyOWdE.js");
+    case "./design-system/icon/iconography/video":
+    case "./design-system/icon/iconography/video.ts":
+      return import("./chunks/video-D3qcvhA-.js");
+    case "./design-system/icon/iconography/warning":
+    case "./design-system/icon/iconography/warning.ts":
+      return import("./chunks/warning-DtTEUM3f.js");
+    case "./design-system/icon/iconography/webinar":
+    case "./design-system/icon/iconography/webinar.ts":
+      return import("./chunks/webinar-BO7QkQsR.js");
+    default:
+      return new Promise(function(e, n) {
+        (typeof queueMicrotask == "function" ? queueMicrotask : setTimeout)(
+          n.bind(null, new Error("Unknown variable dynamic import: " + s))
+        );
+      });
+  }
+}
+function h(s) {
+  switch (s) {
+    case "./entry-components/ai-smart-search/ai-smart-search-bubble":
+    case "./entry-components/ai-smart-search/ai-smart-search-bubble.ts":
+      return import("./chunks/ai-smart-search-bubble-B5Z0FrTU.js");
+    case "./entry-components/ai-smart-search/ai-smart-search-chat-message-box":
+    case "./entry-components/ai-smart-search/ai-smart-search-chat-message-box.ts":
+      return import("./chunks/ai-smart-search-chat-message-box-B_L7uMjZ.js");
+    case "./entry-components/ai-smart-search/ai-smart-search-chat-message":
+    case "./entry-components/ai-smart-search/ai-smart-search-chat-message.ts":
+      return import("./chunks/ai-smart-search-chat-message-Bsh0lM3A.js");
+    case "./entry-components/ai-smart-search/ai-smart-search-chat-messages":
+    case "./entry-components/ai-smart-search/ai-smart-search-chat-messages.ts":
+      return import("./chunks/ai-smart-search-chat-messages-CrXG0r28.js");
+    case "./entry-components/ai-smart-search/ai-smart-search-container":
+    case "./entry-components/ai-smart-search/ai-smart-search-container.ts":
+      return import("./chunks/ai-smart-search-container-B2PRQZTe.js");
+    case "./entry-components/ai-smart-search/ai-smart-search-feedback-area.model":
+    case "./entry-components/ai-smart-search/ai-smart-search-feedback-area.model.ts":
+      return import("./chunks/ai-smart-search-feedback-area.model-DBIOgucs.js");
+    case "./entry-components/ai-smart-search/ai-smart-search-feedback-area":
+    case "./entry-components/ai-smart-search/ai-smart-search-feedback-area.ts":
+      return import("./chunks/ai-smart-search-feedback-area-BNW5WeDH.js");
+    case "./entry-components/ai-smart-search/ai-smart-search-feedback-banner":
+    case "./entry-components/ai-smart-search/ai-smart-search-feedback-banner.ts":
+      return import("./chunks/ai-smart-search-feedback-banner-0HW0K4ty.js");
+    case "./entry-components/ai-smart-search/ai-smart-search-feedback-link":
+    case "./entry-components/ai-smart-search/ai-smart-search-feedback-link.ts":
+      return import("./chunks/ai-smart-search-feedback-link-DjIwsyNs.js");
+    case "./entry-components/ai-smart-search/ai-smart-search-textarea":
+    case "./entry-components/ai-smart-search/ai-smart-search-textarea.ts":
+      return import("./chunks/ai-smart-search-textarea-Cf4umXhS.js");
+    case "./entry-components/ai-smart-search/ai-smart-search-view":
+    case "./entry-components/ai-smart-search/ai-smart-search-view.ts":
+      return import("./chunks/ai-smart-search-view-ECYnEyEM.js");
+    case "./entry-components/ai-smart-search/ai-smart-search.context":
+    case "./entry-components/ai-smart-search/ai-smart-search.context.ts":
+      return import("./chunks/ai-smart-search.context-B9yVPyYx.js");
+    case "./entry-components/ai-smart-search/ai-smart-search.model":
+    case "./entry-components/ai-smart-search/ai-smart-search.model.ts":
+      return import("./chunks/ai-smart-search.model-hXWPdr5t.js");
+    case "./entry-components/ai-smart-search/ai-smart-search":
+    case "./entry-components/ai-smart-search/ai-smart-search.ts":
+      return import("./chunks/ai-smart-search-Dek9x3ZF.js");
+    case "./entry-components/audio/audio":
+    case "./entry-components/audio/audio.ts":
+      return import("./chunks/audio-B1N3PzMu.js");
+    case "./entry-components/audio/model":
+    case "./entry-components/audio/model.ts":
+      return import("./chunks/model-Bg2SYrSv.js");
+    case "./entry-components/bundle-course-list/bundle-course-list.model":
+    case "./entry-components/bundle-course-list/bundle-course-list.model.ts":
+      return Promise.resolve().then(() => _);
+    case "./entry-components/bundle-course-list/bundle-course-list":
+    case "./entry-components/bundle-course-list/bundle-course-list.ts":
+      return import("./chunks/course-card-BKAAyhFJ.js").then((e) => e.b);
+    case "./entry-components/content-details/content-details-container":
+    case "./entry-components/content-details/content-details-container.ts":
+      return import("./chunks/course-card-BKAAyhFJ.js").then((e) => e.c);
+    case "./entry-components/content-details/content-details-curriculum-item":
+    case "./entry-components/content-details/content-details-curriculum-item.ts":
+      return import("./chunks/content-details-curriculum-item-DjvKe_ry.js");
+    case "./entry-components/content-details/content-details-expandable-content":
+    case "./entry-components/content-details/content-details-expandable-content.ts":
+      return import("./chunks/content-details-expandable-content-DdfsD_iJ.js");
+    case "./entry-components/content-details/content-details-item-content":
+    case "./entry-components/content-details/content-details-item-content.ts":
+      return import("./chunks/content-details-item-content-R2KxqP9u.js");
+    case "./entry-components/content-details/content-details-main-section":
+    case "./entry-components/content-details/content-details-main-section.ts":
+      return import("./chunks/content-details-main-section-SpseSwdV.js");
+    case "./entry-components/content-details/content-details-view":
+    case "./entry-components/content-details/content-details-view.ts":
+      return import("./chunks/content-details-view-B9dm4u_M.js");
+    case "./entry-components/content-details/content-details.context":
+    case "./entry-components/content-details/content-details.context.ts":
+      return import("./chunks/content-details.context-Bb_jFJ32.js");
+    case "./entry-components/content-details/content-details.model":
+    case "./entry-components/content-details/content-details.model.ts":
+      return import("./chunks/content-details.model-DfIeVFlK.js");
+    case "./entry-components/content-details/content-details.styles":
+    case "./entry-components/content-details/content-details.styles.ts":
+      return import("./chunks/content-details.styles-sJAwFw_I.js");
+    case "./entry-components/content-details/content-details":
+    case "./entry-components/content-details/content-details.ts":
+      return import("./chunks/content-details-YiBCNo3f.js");
+    case "./entry-components/content-details/course-hero-header.styles":
+    case "./entry-components/content-details/course-hero-header.styles.ts":
+      return import("./chunks/course-hero-header.styles-DcASLNHs.js");
+    case "./entry-components/content-details/render-course-hero-header":
+    case "./entry-components/content-details/render-course-hero-header.ts":
+      return import("./chunks/render-course-hero-header-DO7kZ5C8.js").then((e) => e.a);
+    case "./entry-components/course-card/course-card.model":
+    case "./entry-components/course-card/course-card.model.ts":
+      return import("./chunks/course-card.model-Zes2ZzCE.js");
+    case "./entry-components/course-card/course-card":
+    case "./entry-components/course-card/course-card.ts":
+      return import("./chunks/course-card-BKAAyhFJ.js").then((e) => e.d);
+    case "./entry-components/course-player/completion-item":
+    case "./entry-components/course-player/completion-item.ts":
+      return import("./chunks/course-player-50XEBzNe.js").then((e) => e.k);
+    case "./entry-components/course-player/course-player-completed":
+    case "./entry-components/course-player/course-player-completed.ts":
+      return import("./chunks/course-player-50XEBzNe.js").then((e) => e.q);
+    case "./entry-components/course-player/course-player-container":
+    case "./entry-components/course-player/course-player-container.ts":
+      return import("./chunks/course-player-50XEBzNe.js").then((e) => e.G);
+    case "./entry-components/course-player/course-player-description":
+    case "./entry-components/course-player/course-player-description.ts":
+      return import("./chunks/course-player-50XEBzNe.js").then((e) => e.H);
+    case "./entry-components/course-player/course-player-footer":
+    case "./entry-components/course-player/course-player-footer.ts":
+      return import("./chunks/course-player-50XEBzNe.js").then((e) => e.y);
+    case "./entry-components/course-player/course-player-header":
+    case "./entry-components/course-player/course-player-header.ts":
+      return import("./chunks/course-player-50XEBzNe.js").then((e) => e.z);
+    case "./entry-components/course-player/course-player-not-released-content":
+    case "./entry-components/course-player/course-player-not-released-content.ts":
+      return import("./chunks/course-player-50XEBzNe.js").then((e) => e.I);
+    case "./entry-components/course-player/course-player-sidenav":
+    case "./entry-components/course-player/course-player-sidenav.ts":
+      return import("./chunks/course-player-50XEBzNe.js").then((e) => e.B);
+    case "./entry-components/course-player/course-player-view":
+    case "./entry-components/course-player/course-player-view.ts":
+      return import("./chunks/course-player-50XEBzNe.js").then((e) => e.D);
+    case "./entry-components/course-player/course-player.context":
+    case "./entry-components/course-player/course-player.context.ts":
+      return import("./chunks/course-player-50XEBzNe.js").then((e) => e.p);
+    case "./entry-components/course-player/course-player.model":
+    case "./entry-components/course-player/course-player.model.ts":
+      return import("./chunks/course-player-50XEBzNe.js").then((e) => e.A);
+    case "./entry-components/course-player/course-player":
+    case "./entry-components/course-player/course-player.ts":
+      return import("./chunks/course-player-50XEBzNe.js").then((e) => e.F);
+    case "./entry-components/course-player/routes":
+    case "./entry-components/course-player/routes.ts":
+      return import("./chunks/course-player-50XEBzNe.js").then((e) => e.r);
+    case "./entry-components/document/document":
+    case "./entry-components/document/document.ts":
+      return import("./chunks/document-23var0ad.js");
+    case "./entry-components/document/model":
+    case "./entry-components/document/model.ts":
+      return import("./chunks/model-SvxGMIqn.js");
+    case "./entry-components/live-announcer/live-announcer.model":
+    case "./entry-components/live-announcer/live-announcer.model.ts":
+      return import("./chunks/live-announcer.model-BK3phGH2.js");
+    case "./entry-components/live-announcer/live-announcer":
+    case "./entry-components/live-announcer/live-announcer.ts":
+      return import("./chunks/live-announcer-DIRx1uyE.js");
+    case "./entry-components/message-instructor/message-instructor-client":
+    case "./entry-components/message-instructor/message-instructor-client.ts":
+      return import("./chunks/course-player-50XEBzNe.js").then((e) => e.w);
+    case "./entry-components/message-instructor/message-instructor-view":
+    case "./entry-components/message-instructor/message-instructor-view.ts":
+      return import("./chunks/course-player-50XEBzNe.js").then((e) => e.x);
+    case "./entry-components/message-instructor/message-instructor.model":
+    case "./entry-components/message-instructor/message-instructor.model.ts":
+      return import("./chunks/course-player-50XEBzNe.js").then((e) => e.v);
+    case "./entry-components/message-instructor/message-instructor.style":
+    case "./entry-components/message-instructor/message-instructor.style.ts":
+      return import("./chunks/course-player-50XEBzNe.js").then((e) => e.u);
+    case "./entry-components/page/page":
+    case "./entry-components/page/page.ts":
+      return import("./chunks/page-C4zPI0Um.js");
+    case "./entry-components/scorm/scorm":
+    case "./entry-components/scorm/scorm.ts":
+      return import("./chunks/scorm-DnjwU0Yl.js");
+    case "./entry-components/share-certificate/share-certificate-client":
+    case "./entry-components/share-certificate/share-certificate-client.ts":
+      return import("./chunks/course-player-50XEBzNe.js").then((e) => e.n);
+    case "./entry-components/share-certificate/share-certificate-view":
+    case "./entry-components/share-certificate/share-certificate-view.ts":
+      return import("./chunks/course-player-50XEBzNe.js").then((e) => e.o);
+    case "./entry-components/share-certificate/share-certificate.model":
+    case "./entry-components/share-certificate/share-certificate.model.ts":
+      return Promise.resolve().then(() => b);
+    case "./entry-components/text/text":
+    case "./entry-components/text/text.ts":
+      return import("./chunks/text-DTVL-C4m.js");
+    case "./entry-components/video/model":
+    case "./entry-components/video/model.ts":
+      return import("./chunks/model-DYM7eHef.js");
+    case "./entry-components/video/video":
+    case "./entry-components/video/video.ts":
+      return import("./chunks/video-BU8JAu-Q.js");
+    case "./entry-components/ai-smart-search/message-components/ai-smart-search-chat-default-message":
+    case "./entry-components/ai-smart-search/message-components/ai-smart-search-chat-default-message.ts":
+      return import("./chunks/ai-smart-search-chat-default-message-QzXI_tNv.js");
+    case "./entry-components/ai-smart-search/message-components/ai-smart-search-chat-initial-message":
+    case "./entry-components/ai-smart-search/message-components/ai-smart-search-chat-initial-message.ts":
+      return import("./chunks/ai-smart-search-chat-initial-message-BFRSUmUs.js");
+    case "./entry-components/ai-smart-search/message-components/ai-smart-search-chat-user-message":
+    case "./entry-components/ai-smart-search/message-components/ai-smart-search-chat-user-message.ts":
+      return import("./chunks/ai-smart-search-chat-user-message-BoXjWtPC.js");
+    case "./entry-components/content-details/badges/badge-item":
+    case "./entry-components/content-details/badges/badge-item.ts":
+      return import("./chunks/badge-item-DXsGMqje.js");
+    case "./entry-components/content-details/badges/badges-list":
+    case "./entry-components/content-details/badges/badges-list.ts":
+      return import("./chunks/badges-list-CnUw2jNV.js");
+    case "./entry-components/content-details/bundle-product-page/bundle-product-page.model":
+    case "./entry-components/content-details/bundle-product-page/bundle-product-page.model.ts":
+      return Promise.resolve().then(() => v);
+    case "./entry-components/content-details/bundle-product-page/bundle-product-page":
+    case "./entry-components/content-details/bundle-product-page/bundle-product-page.ts":
+      return import("./chunks/course-card-BKAAyhFJ.js").then((e) => e.a);
+    case "./entry-components/content-details/certs-credits/certs-credits-item":
+    case "./entry-components/content-details/certs-credits/certs-credits-item.ts":
+      return import("./chunks/certs-credits-item-CELPMfFz.js");
+    case "./entry-components/content-details/certs-credits/certs-credits-list":
+    case "./entry-components/content-details/certs-credits/certs-credits-list.ts":
+      return import("./chunks/certs-credits-list-B9KrcJck.js");
+    case "./entry-components/content-details/live-learning/child-session-item":
+    case "./entry-components/content-details/live-learning/child-session-item.ts":
+      return import("./chunks/child-session-item-bidWKs-w.js").then((e) => e.c);
+    case "./entry-components/content-details/live-learning/constants":
+    case "./entry-components/content-details/live-learning/constants.ts":
+      return import("./chunks/constants-D-o6jmPA.js");
+    case "./entry-components/content-details/live-learning/event-pills":
+    case "./entry-components/content-details/live-learning/event-pills.ts":
+      return import("./chunks/event-pills-Cei8gnSH.js");
+    case "./entry-components/content-details/live-learning/live-learning.styles":
+    case "./entry-components/content-details/live-learning/live-learning.styles.ts":
+      return import("./chunks/live-learning.styles-C0h2uru0.js");
+    case "./entry-components/content-details/live-learning/renderLiveLearningTab":
+    case "./entry-components/content-details/live-learning/renderLiveLearningTab.ts":
+      return import("./chunks/renderLiveLearningTab-DA3sCA99.js");
+    case "./entry-components/content-details/live-learning/session-item":
+    case "./entry-components/content-details/live-learning/session-item.ts":
+      return import("./chunks/session-item-BUssmjKF.js");
+    case "./entry-components/content-details/live-learning/training-sessions":
+    case "./entry-components/content-details/live-learning/training-sessions.ts":
+      return import("./chunks/training-sessions-Dfr9IRpb.js");
+    case "./entry-components/content-details/review/lua-review-rating":
+    case "./entry-components/content-details/review/lua-review-rating.ts":
+      return import("./chunks/lua-review-rating-B0dePIyk.js");
+    case "./entry-components/content-details/review/review-item":
+    case "./entry-components/content-details/review/review-item.ts":
+      return import("./chunks/review-item-DfTkVr0e.js");
+    case "./entry-components/content-details/review/review-list":
+    case "./entry-components/content-details/review/review-list.ts":
+      return import("./chunks/review-list-Czj1UDpy.js");
+    case "./entry-components/content-details/summary-panel/summary-item":
+    case "./entry-components/content-details/summary-panel/summary-item.ts":
+      return import("./chunks/summary-item-DjcTHLGN.js");
+    case "./entry-components/content-details/summary-panel/summary-panel":
+    case "./entry-components/content-details/summary-panel/summary-panel.ts":
+      return import("./chunks/summary-panel-aG_V_2n0.js");
+    case "./entry-components/learner_modules/scorm/scorm_frame_api":
+    case "./entry-components/learner_modules/scorm/scorm_frame_api.ts":
+      return import("./chunks/scorm_frame_api-DIpIaRMy.js");
+    case "./entry-components/learner_modules/scorm/scorm_module":
+    case "./entry-components/learner_modules/scorm/scorm_module.ts":
+      return import("./chunks/scorm_module-BDi0j_M4.js");
+    default:
+      return new Promise(function(e, n) {
+        (typeof queueMicrotask == "function" ? queueMicrotask : setTimeout)(
+          n.bind(null, new Error("Unknown variable dynamic import: " + s))
+        );
+      });
+  }
+}
+const _ = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null
+}, Symbol.toStringTag, { value: "Module" })), b = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null
+}, Symbol.toStringTag, { value: "Module" })), v = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null
+}, Symbol.toStringTag, { value: "Module" }));
+export {
+  i as LuAnywhere,
+  u as autoload,
+  m as loadLuds,
+  r as loadModule
+};
+//# sourceMappingURL=lu-anywhere.js.map

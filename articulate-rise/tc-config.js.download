@@ -1,0 +1,20 @@
+/* Tin Can configuration */
+
+//
+// ActivityID that is sent for the statement's object
+//
+TC_COURSE_ID = "http://PNr9W5dPEcoZo9QzcN5x92KCn9eBK_At_rise"
+
+//
+// CourseName for the activity
+//
+TC_COURSE_NAME = {
+  "en-US": "Structural Surfaces"
+};
+
+//
+// CourseDesc for the activity
+//
+TC_COURSE_DESC = {
+  "en-US": "&lt;strong&gt;Time to complete:&amp;nbsp;&lt;/strong&gt;30 minutes&lt;ul&gt;&lt;li&gt;You can complete the sections all at once, or at your own pace.&amp;nbsp;&lt;/li&gt;&lt;li&gt;Your progress will be tracked so you can re-enter the course anytime, right where you left off.&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;strong&gt;Learning objectives&lt;/strong&gt;Once you have completed this module, you will be able to:&lt;ul&gt;&lt;li&gt;Build a geological model with faults and structural surfaces&lt;/li&gt;&lt;li&gt;Edit structural surfaces using points and polylines&lt;/li&gt;&lt;/ul&gt;&lt;table class=&#34;&#34; style=&#34;width: 100%&#34;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td colspan=&#34;1&#34; rowspan=&#34;1&#34; class=&#34;&#34; style=&#34;background-color: rgb(242, 242, 242); width: 100%&#34;&gt;&lt;strong&gt;Please note:&lt;/strong&gt;&amp;nbsp;With every release, there may be small changes to the user interface. While you may notice small differences between the screenshots, gifs and videos in this course and the latest available version of Leapfrog, the content in this course is still valid as the layout, location of functions and workflows remain the same.&lt;br class=&#34;break-when-trailing&#34;&gt;&lt;br class=&#34;break-when-trailing&#34;&gt;If you have any questions about Leapfrog or the technical workflows presented within, please &lt;a rel=&#34;noopener noreferrer&#34; target=&#34;_blank&#34; href=&#34;https://my.seequent.com/support/request&#34;&gt;&lt;strong&gt;contact us&lt;/strong&gt;&lt;/a&gt;.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;"
+};
