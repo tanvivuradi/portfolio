@@ -1,0 +1,113 @@
+{
+  "version": "3.114.36655.0",
+  "course_id": "608mzemIUxG",
+  "title": "Building a Sales Performance Dashboard in Looker Studio",
+  "thumbnail": "story_content/thumbnail.jpg",
+  "scenes": [
+    {
+      "title": "Home"
+    },
+    {
+      "title": "Try Me"
+    },
+    {
+      "title": "Guide Me"
+    }
+  ],
+  "slides": [
+    {
+      "id": "5rP5vAPs2UM",
+      "title": "Home Page",
+      "scene_index": "1.1"
+    },
+    {
+      "id": "5cYbuCgpOjo",
+      "title": "Step 1",
+      "scene_index": "2.1"
+    },
+    {
+      "id": "5g9Ka4ChgQ8",
+      "title": "Step 2",
+      "scene_index": "2.2"
+    },
+    {
+      "id": "6AgFm3HMmNw",
+      "title": "Step 3",
+      "scene_index": "2.3"
+    },
+    {
+      "id": "5xGY8ufdjMr",
+      "title": "Step 4",
+      "scene_index": "2.4"
+    },
+    {
+      "id": "6ag82QFdUXT",
+      "title": "Step 5",
+      "scene_index": "2.5"
+    },
+    {
+      "id": "6EOiNoCZnkE",
+      "title": "Step 6",
+      "scene_index": "2.6"
+    },
+    {
+      "id": "5kqGWEZyuXI",
+      "title": "Step 7",
+      "scene_index": "2.7"
+    },
+    {
+      "id": "6XQ7MAT6unj",
+      "title": "Step 8",
+      "scene_index": "2.8"
+    },
+    {
+      "id": "6QvTlLfF0im",
+      "title": "Step 1",
+      "scene_index": "3.1"
+    },
+    {
+      "id": "6Zm0ptsEncy",
+      "title": "Step 2",
+      "scene_index": "3.2"
+    },
+    {
+      "id": "6je1mR18NCU",
+      "title": "Step 3",
+      "scene_index": "3.3"
+    },
+    {
+      "id": "6AQfz4HVeNx",
+      "title": "Step 4",
+      "scene_index": "3.4"
+    },
+    {
+      "id": "5qXv5HHnN0m",
+      "title": "Step 5",
+      "scene_index": "3.5"
+    },
+    {
+      "id": "5vwtekMaSBD",
+      "title": "Step 6",
+      "scene_index": "3.6"
+    },
+    {
+      "id": "5xI6LCVbjys",
+      "title": "Step 7",
+      "scene_index": "3.7"
+    },
+    {
+      "id": "6PL0JdSiY3F",
+      "title": "Step 8",
+      "scene_index": "3.8"
+    }
+  ],
+  "player": {
+    "name": "unified",
+    "width": 1220,
+    "height": 554
+  },
+  "stage": {
+    "width": 960,
+    "height": 460
+  }
+}
